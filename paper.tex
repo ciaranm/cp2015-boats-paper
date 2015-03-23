@@ -185,7 +185,7 @@ Having produced a schedule that minimises boat changes, we then minimise criteri
 \begin{flalign}
 & \forall_{i\in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.position_{i,j} \in \{0,1\} \label{posA} \\
 & \forall_{i \in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.position_{i,j} = 1 \iff \sigma.timeSlot_{m.j+i} \geq 0 \label{posB} \\
-& \forall_{i \in [0..m-1]} ~ imbalance_{i} = |\frac{n-1}{m} - \sum_{j=0}{f-1} position_{i,j}| \label{imbA} \\
+& \forall_{i \in [0..m-1]} ~ imbalance_{i} = |\frac{n-1}{m} - \sum_{j=0}^{f-1} position_{i,j}| \label{imbA} \\
 & \sigma.maxImbalance = \sigma.maximum(\sigma.imbalance)  \label{imbB}
 \end{flalign}
 
