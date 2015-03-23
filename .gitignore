@@ -1,0 +1,16 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+paper.pdf
+*.snm
+*.toc
+*.bbl
+*.blg
+texput.fls
+texput.log
+gen-*.*
+gnuplot-lua-*
+*.synctex*
