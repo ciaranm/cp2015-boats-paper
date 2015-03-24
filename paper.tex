@@ -8,6 +8,9 @@
 \usepackage{listings}
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{mathtools}
+\usepackage[rightcaption]{sidecap}
+\usepackage{multicol}
+\usepackage{booktabs}
 \usepackage{coffee2}
 
 \newcommand{\match}{\mathit{match}}
@@ -35,6 +38,8 @@
 \newcommand{\maximum}{\mathrm{maximum}}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\sidecaptionvpos{table}{c}
 
 \pagestyle{plain}
 \begin{document}
@@ -108,26 +113,24 @@ skippers and 6 boats, to help illustrate the constraint models. Our
 descriptions of the models omit some minor details, however the models are
 available to download\footnote{?? give us a link to the models}.
 
-\begin{table}[tb]
-\begin{center}
-\begin{tabular}{cc} \\
-flight & matches \\ \hline
-0 & (0,1) (2,3) (4,5)  \\
-1 & (0,2) (4,6) (1,5)  \\
-2 & (2,6) (0,5) (1,3)  \\
-3 & (5,6) (0,3) (1,4)  \\
-4 & (3,5) (1,6) (2,4)  \\
-5 & (3,6) (0,4) (2,5)  \\
-6 & (3,4) (1,2) (0,6)  \\ \hline
-\end{tabular}
-\end{center}
-\caption{A round-robin schedule with 7 skippers, 6 boats and 7 flights.
-Skippers are numbered 0 to 6. Note that the order of skippers within a flight
-is significant, as is position within a match (port or starboard). This
-schedule is the result of stages 1 and 2, and has yet to be renumbered and
-oriented (stages 3 and 4).}
-\label{tab1}
-\end{table}
+\begin{SCtable}[2.0][tb]
+    \begin{tabular}{c@{\hspace{1.5em}}ccc}
+        \toprule
+        Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+        0 & (0,1) & (2,3) & (4,5) \\
+        1 & (0,2) & (4,6) & (1,5) \\
+        2 & (2,6) & (0,5) & (1,3) \\
+        3 & (5,6) & (0,3) & (1,4) \\
+        4 & (3,5) & (1,6) & (2,4) \\
+        5 & (3,6) & (0,4) & (2,5) \\
+        6 & (3,4) & (1,2) & (0,6) \\ \bottomrule
+    \end{tabular}
+    \caption{A round-robin schedule with 7 skippers, 6 boats and 7 flights.
+        Skippers are numbered 0 to 6. Note that the order of skippers within a flight
+        is significant, as is position within a match (port or starboard). This
+        schedule is the result of stages 1 and 2, and has yet to be renumbered and
+        oriented (stages 3 and 4).} \label{tab1}
+\end{SCtable}
 
 \subsection{Stage 1: Minimising Boat Changes}
 
