@@ -163,7 +163,17 @@ flight (\ref{eq7}). If all time slots in a flight are equal to -1 then the
 skipper is in a bye (\ref{eq8}), and if all time slots in a flight are equal to
 -2 then the skipper has finished all his matches (\ref{eq9}).
 
-A global cardinality constraint \cite{globCard} is then imposed on the array $\timeSlot$ to ensure that this skipper ($\sigma$)  is in a match with all other skippers (i.e. $\{0 .. n-1 \} \setminus \{\sigma\}$) once (i.e. $\{1 .. 1\}$) and once only (i.e. $\{1 .. 1\}$). The $\state$ variables are then used to impose match race criteria 4 (if last in flight $i$ then not first in flight $i+1$), criteria 11 (if last in flight $i$ then not in a bye in flight $i+1$) and criteria 12 (if flight $i$ is a bye then flight $i$ is not first). In addition, we have the rule that if a skipper has finished his matches in flight $i$ (i.e. END) then he has finished his matches in flight $i+1$ (and so on). These criteria are imposed on the $\state$ variables via a deterministic finite automata (dfa) constraint \cite{Pesant04}.
+A global cardinality constraint \cite{globCard} is then imposed on the array
+$\timeSlot$ to ensure that this skipper ($\sigma$)  is in a match with all
+other skippers (i.e. $\{0 \ldots n-1 \} \setminus \{\sigma\}$) once (i.e. $\{1 \ldots
+1\}$) and once only (i.e. $\{1 \ldots 1\}$). The $\state$ variables are then used
+to impose match race criteria 4 (if last in flight $i$ then not first in flight
+$i+1$), criteria 11 (if last in flight $i$ then not in a bye in flight $i+1$)
+and criteria 12 (if flight $i$ is a bye then flight $i$ is not first). In
+addition, we have the rule that if a skipper has finished his matches in flight
+$i$ (i.e. END) then he has finished his matches in flight $i+1$ (and so on).
+These criteria are imposed on the $\state$ variables via a deterministic finite
+automata (DFA) constraint \cite{Pesant04}.
 
 The constraints above are shown pictorially in Figure \ref{skipper5}, and corresponds to skipper 5 in the Table \ref{tab1} schedule. The $\state$ array is presented as coloured boxes, and below that the $\timeSlot$ array. The arrows represent the channeling constraints (\ref{eq5}) to (\ref{eq9}). The $\state$ array is coloured with green representing LAST, yellow for MID, blue for FIRST, red for LAST and (not shown) pink for BYE. The schedule of Table \ref{tab1} is reproduced with the matches for skipper 5 emboldened. To the right of the schedule is schema for the dfa. Coloured arc represent a transition from one state to another. The dfa is encoded as a set of transition objects $\langle q_{i},\iota,q_{j} \rangle$ where a transition is made from state $q_{i}$ to state $q_{j}$ when encountering input $\iota$. In addition we specify the accepting states, being all states except the start state (white) and bye state (pink).
 
