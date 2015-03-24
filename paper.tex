@@ -331,13 +331,14 @@ breaking is imposed at top of search.
 & \minimise(\maxImbalance) \label{balAllC}
 \end{flalign}
 
-\noindent
-Stage 3 then takes as input the schedule produced in stage 2 and renames skippers in the last round of the last flight to be (0,1), satisfying criteria 9. This is a simple linear process. The schedule produced for 7 skippers and 6 boats is shown in Table \ref{tab2}.
+Stage 3 then takes as input the schedule produced in stage 2 and renames
+skippers in the last round of the last flight to be (0,1), satisfying criteria
+9. This is a simple linear process. The schedule produced for 7 skippers and 6
+boats is shown in Table~\ref{tab2}.
 
-\begin{table}[h]
-%\vspace{-0.2cm}
+\begin{table}[tb]
 \begin{center}
-\begin{tabular}{cc} \\ 
+\begin{tabular}{cc} \\
 flight & matches \\ \hline
 0 & (0,6) (2,3) (4,5) \\
 1 & (0,2) (4,1) (6,5) \\
@@ -348,7 +349,11 @@ flight & matches \\ \hline
 6 & (3,4) (6,2) (0,1) \\ \hline
 \end{tabular}
 \end{center}
-\caption{Round-robin schedule with 7 skippers, 6 boats and 7 flights. Result of stages 1, 2, and 3. It has 6 boat changes and imbalance 1. An example of imbalance is skipper $\sigma[{0}]$ with 2 matches in position 0 (first), 3 in position 1 and 1 (mid) in position 2 (last). Perfect balance would be 2 matches in each position, only achieved by skipper 2.}
+\caption{Round-robin schedule with 7 skippers, 6 boats and 7 flights. Result of
+stages 1, 2, and 3. It has 6 boat changes and imbalance 1. An example of
+imbalance is skipper $\sigma[{0}]$ with 2 matches in position 0 (first), 3 in
+position 1 and 1 (mid) in position 2 (last). Perfect balance would be 2 matches
+in each position, only achieved by skipper 2.}
 \label{tab2}
 \end{table}
 
