@@ -151,10 +151,8 @@ $\timeSlot[{m(i+1)-1}]$.
 \setlength{\mathindent}{0pt}\setlength{\abovedisplayskip}{0pt}\setlength{\belowdisplayskip}{0pt}
 \begin{framed}
 \begin{align}
-    &f = \lceil n(n-1)/m  \rceil \label{var:f} \tag{V1} \\
-    &t = n(n-1)/2 \label{var:t} \tag{V2} \\
-    &\forall \tau \in \{0 \nldots t-1\}: \timeSlot[{\tau}] \in \{-2 \nldots t-1\} \setminus \{\sigma\} \label{var:timeSlot} \tag{V3} \\
-    &\forall i \in \{0 \nldots f-1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V4} \\
+    &\forall \tau \in \{0 \nldots t-1\}: \timeSlot[{\tau}] \in \{-2 \nldots t-1\} \setminus \{\sigma\} \label{var:timeSlot} \tag{V1} \\
+    &\forall i \in \{0 \nldots f-1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V2} \\
     &\forall i \in \{0 \nldots f\}: \label{C1} \tag{C1} \\
     &\begin{alignedat}{3}
     &\hspace*{1em} \state[{i}] = \FIRST &\ &\Leftrightarrow&&\ \timeSlot[{i \cdot m}] \geq 0 \\
@@ -169,7 +167,8 @@ $\timeSlot[{m(i+1)-1}]$.
 \end{framed}
 \caption{A skipper-oriented model. A copy of these variables and constraints is
 created for each skipper $\sigma$. The number of skippers is $n$, and $m$ is
-the number of matches.}
+the number of matches in a flight. The number of flights is $f = \lceil
+n(n-1)/m  \rceil$, and there are $t = n(n-1)/2$ matches in total.}
 \end{figure}
 
 In \eqref{var:timeSlot} the array $\timeSlot$ is defined and in
