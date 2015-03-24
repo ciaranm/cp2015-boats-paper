@@ -299,7 +299,8 @@ flight), flight 1 skipper 6 has a boat change, flight 2 skipper 3 has a boat
 change, flight 3 it's skipper 4, flight 4 skipper 6, flight 5 skipper 0 and
 last flight skipper 1.
 
-\subsection{Stage 2 and 3: minimising imbalance and renaming skippers}
+\subsection{Stages 2 and 3: Minimising Imbalances and Renaming Skippers}
+
 Having produced a schedule that minimises boat changes, we then minimise criteria 6, imbalance. Assuming the first stage produced a schedule with $\beta$ boat changes we post this as a hard constraint in stage 2, i.e.\ $\totalBoatChanges \leq \beta$. For each skipper $\sigma$ we introduce a zero/one variable $position[{i,j}]$  (\ref{posA}) which is 1 if and only if skipper $\sigma$ is in a match in time $m.j + i$, i.e.\ in the $i^{th}$ match of the  $j^{th}$ flight (\ref{posB}). Imbalance is then computed via (\ref{imbA}) for each position, as the absolute amount of over or under expected presence in a given postion. Finally, (\ref{imbB}) we compute the maximum imbalance over all positions for this skipper.
 
 \begin{flalign}
