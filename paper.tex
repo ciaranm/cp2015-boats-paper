@@ -35,6 +35,7 @@
 \newcommand{\position}{\mathit{position}}
 \newcommand{\imbalance}{\mathit{imbalance}}
 \newcommand{\maxImbalance}{\mathit{maxImbalance}}
+\newcommand{\timeVar}{\mathit{time}}
 
 \newcommand{\START}{\textnormal{\textsc{Start}}}
 \newcommand{\FIRST}{\textnormal{\textsc{First}}}
@@ -248,14 +249,16 @@ to be all different also ensures that columns are all different.
     & \forall_{i \in [0..n-1]} ~ \allDifferent(\modMatch[{i}]) \label{eq19}
 \end{flalign}
 
-\noindent
-We now take a temporal view (\ref{eq20}), such that $time[{\tau}]$ is a pair $(i,j)$, stating that at time $\tau$ skippers $s[{i}]$ and $s[{j}]$ are in a match, i.e. we channel between the match-perspective and the temporal-perspective.
+We now take a temporal view (\ref{eq20}), such that $\timeVar[{\tau}]$ is a pair
+$(i,j)$, stating that at time $\tau$ skippers $s[{i}]$ and $s[{j}]$ are in a
+match, i.e. we channel between the match-perspective and the
+temporal-perspective.
 %
 % one dimensional time and decision variables
 %
 \begin{flalign}
-    & \forall_{\tau \in [0..t-1]} ~ time[{\tau}] \in \{(0,1) .. (n-2,n-1)\} \label{eq20} \\
-    & \forall_{\tau \in [0 .. t-1]} ~ \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ time[{\tau}] = (i,j) \iff \match[{i,j}] = \tau \label{eq21}
+    & \forall_{\tau \in [0..t-1]} ~ \timeVar[{\tau}] \in \{(0,1) .. (n-2,n-1)\} \label{eq20} \\
+    & \forall_{\tau \in [0 .. t-1]} ~ \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \timeVar[{\tau}] = (i,j) \iff \match[{i,j}] = \tau \label{eq21}
 \end{flalign}
 
 \noindent
@@ -269,17 +272,17 @@ Finally we have the optimisation criteria (criteria 10) to minimise the number o
 & minimise(\totalBoatChanges) \label{eq23}
 \end{flalign}
 
-Figure \ref{schedChanges} gives a pictorial view of the model, using the 7 skipper and 6 boat problem. On the right we have the 7 skippers with their states and time slots. Again, top right, we give the schedule actually produced.  Middle left we have the $\match$ array and at the bottom the $time$ array. Above the $match$ array we have the $\modMatch$ array. The yellow arrows show the channeling between parts of the model.
+Figure \ref{schedChanges} gives a pictorial view of the model, using the 7 skipper and 6 boat problem. On the right we have the 7 skippers with their states and time slots. Again, top right, we give the schedule actually produced.  Middle left we have the $\match$ array and at the bottom the $\timeVar$ array. Above the $match$ array we have the $\modMatch$ array. The yellow arrows show the channeling between parts of the model.
 
 \begin{figure}[h]
 \centering
 \includegraphics[height=10.2cm,width=13.2cm]{schedule.pdf}
 %\vspace{-35mm}
-\caption{A pictorial representation of the entire model of the schedule for 7 skippers and 6 boats. The schedule is reproduced top right. On the right we have the 7 skippers, on top left the $\modMatch$ array, at the bottom $time$ and middle left the $\match$ array. The yellow arrows signify channeling between parts of the model.}
+\caption{A pictorial representation of the entire model of the schedule for 7 skippers and 6 boats. The schedule is reproduced top right. On the right we have the 7 skippers, on top left the $\modMatch$ array, at the bottom $\timeVar$ and middle left the $\match$ array. The yellow arrows signify channeling between parts of the model.}
 \label{schedChanges} 
 \end{figure}
 
-The decision variables are $time[{0}]$ to $time[{t-1}]$, i.e. for each time slot we decide what match takes place. A symmetry break is made at the top of search by forcing the first round to contain the matches (0,1), (2,3), ... i.e. $\forall_{i \in [0..m-1]} ~ \match[{2.i,2i+1}] = i$. The schedule presented has 6 boat changes: there are no boat changes in flight 0 (first flight), flight 1 skipper 6 has a boat change, flight 2 skipper 3 has a boat change, flight 3 it's skipper 4, flight 4 skipper 6, flight 5 skipper 0 and last flight skipper 1.
+The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$, i.e. for each time slot we decide what match takes place. A symmetry break is made at the top of search by forcing the first round to contain the matches (0,1), (2,3), ... i.e. $\forall_{i \in [0..m-1]} ~ \match[{2.i,2i+1}] = i$. The schedule presented has 6 boat changes: there are no boat changes in flight 0 (first flight), flight 1 skipper 6 has a boat change, flight 2 skipper 3 has a boat change, flight 3 it's skipper 4, flight 4 skipper 6, flight 5 skipper 0 and last flight skipper 1.
 
 \subsection{Stage 2 and 3: minimising imbalance and renaming skippers}
 Having produced a schedule that minimises boat changes, we then minimise criteria 6, imbalance. Assuming the first stage produced a schedule with $\beta$ boat changes we post this as a hard constraint in stage 2, i.e. $\totalBoatChanges \leq \beta$. For each skipper $\sigma$ we introduce a zero/one variable $position[{i,j}]$  (\ref{posA}) which is 1 if and only if skipper $\sigma$ is in a match in time $m.j + i$, i.e. in the $i^{th}$ match of the  $j^{th}$ flight (\ref{posB}). Imbalance is then computed via (\ref{imbA}) for each position, as the absolute amount of over or under expected presence in a given postion. Finally, (\ref{imbB}) we compute the maximum imbalance over all positions for this skipper.
@@ -292,7 +295,7 @@ Having produced a schedule that minimises boat changes, we then minimise criteri
 \end{flalign}
 
 \noindent
-We then capture the maxmum imbalance over all skippers (\ref{balAllA} and \ref{balAllB}) and minimise this (\ref{balAllC}). As before, the decision variables are $time[{0}]$ to $time[{t-1}]$ and the same symmetry breaking is imposed at top of search.
+We then capture the maxmum imbalance over all skippers (\ref{balAllA} and \ref{balAllB}) and minimise this (\ref{balAllC}). As before, the decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$ and the same symmetry breaking is imposed at top of search.
 
 \begin{flalign}
     & \forall_{i \in [0..n-1]} ~ \imbalance[{i}] = \sigma[{i}].\maxImbalance \label{balAllA} \\
