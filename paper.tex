@@ -7,6 +7,7 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{mathtools}
 \usepackage{coffee2}
 
 \newcommand{\match}{\mathit{match}}
@@ -31,6 +32,8 @@
 \newcommand{\eachOccursExactlyOnce}{\mathrm{eachOccursExactlyOnce}}
 \newcommand{\allDifferent}{\mathrm{allDifferent}}
 \newcommand{\minimise}{\mathrm{minimise}}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
 \pagestyle{plain}
 \begin{document}
@@ -300,7 +303,7 @@ maximum imbalance over all positions for this skipper.
 \begin{flalign}
     & \forall_{i\in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] \in \{0,1\} \label{posA} \\
     & \forall_{i \in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] = 1 \iff \sigma.\timeSlot[{m.j+i}] \geq 0 \label{posB} \\
-    & \forall_{i \in [0..m-1]} ~ \imbalance[{i}] = |\frac{n-1}{m} - \sum_{j=0}^{f-1} \position[{i,j}]| \label{imbA} \\
+    & \forall_{i \in [0..m-1]} ~ \imbalance[{i}] = \abs*{\frac{n-1}{m} - \sum_{j=0}^{f-1} \position[{i,j}]} \label{imbA} \\
 & \sigma.\maxImbalance = \sigma.maximum(\sigma.imbalance)  \label{imbB}
 \end{flalign}
 
@@ -355,7 +358,7 @@ skipper $\sigma[{2}]$'s 4$^{th}$ variable must take a different value from
 $\sigma[{5}]$ 5$^{th}$ variable. There are summation constraints on each
 skipper to enforce criteria 2 and 3 (equal number of port and starboard
 matches). Criteria 8 is enforced by posting constraints such that in a match
-($\sigma[{i}],\sigma[{j}]$) where $|i - j| = 1$, the higher indexed skipper
+($\sigma[{i}],\sigma[{j}]$) where $\abs*{i - j} = 1$, the higher indexed skipper
 (lower ranked) is on the port side. A DFA constraint is posted for criteria 5
 (restricting sequences of port and starboard assignments).
 
