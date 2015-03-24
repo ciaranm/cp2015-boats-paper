@@ -217,9 +217,23 @@ in pink and $\END$ in red.}
 \label{skipper5}
 \end{figure}
 
-\noindent
-We are now in a position to model criteria 1 (each skipper sails against every other skipper) and optimisation criteria 10 (minimise boat changes).  In (\ref{eq13}), (\ref{eq14})  and (\ref{eq15}) we present a
-match-perspective of the schedule, using a two dimensional array of variables $\match$, where $\match[{i,j}]$ is the time slot that skippers $s[{i}]$ and $s[{j}]$ meet in a match. Only the half above the diagonal is represented and the lower half is made up of exactly the same variables, i.e. $\match[{i,j}]$ is \emph{exactly} the same constrained variable as $\match[{j,i}]$.  Constraint (\ref{eq15}) states that  a match between skippers $s[{i}]$ and $s[{j}]$ takes place at time $k$ (i.e. $\match[{i,j}] = k$) if and only if  skipper $s[{i}]$'s $k^{th}$ time slot is skipper $s[{j}]$ and conversely that skipper $s[{j}]$'s $k^{th}$ time slot is skipper $s[{i}]$.  Constraints (\ref{eq16}), (\ref{eq17})  and (\ref{eq18}) then convert this from time slots to flights, i.e. $\modMatch[{i,j}]$ is the flight in which skippers $s[{i}]$ and $s[{j}]$ meet for a match. Finally, constraint (\ref{eq19}) ensures that each skipper's match occurs in different flights. Also, since $\modMatch[{i,j}] \equiv \modMatch[{j,i}]$, setting rows to be all different also ensures that columns are all different.
+We are now in a position to model criteria 1 (each skipper sails against every
+other skipper) and optimisation criteria 10 (minimise boat changes).  In
+\ref{eq13}, \ref{eq14} and \ref{eq15} we present a match perspective of the
+schedule, using a two dimensional array of variables $\match$, where
+$\match[{i,j}]$ is the time slot that skippers $s[{i}]$ and $s[{j}]$ meet in a
+match. Only the half above the diagonal is represented, and the lower half is
+made up of exactly the same variables, i.e. $\match[{i,j}]$ is \emph{exactly}
+the same constrained variable as $\match[{j,i}]$. Constraint \ref{eq15} states
+that  a match between skippers $s[{i}]$ and $s[{j}]$ takes place at time $k$
+(i.e. $\match[{i,j}] = k$) if and only if  skipper $s[{i}]$'s $k^{th}$ time
+slot is skipper $s[{j}]$ and conversely that skipper $s[{j}]$'s $k^{th}$ time
+slot is skipper $s[{i}]$).  Constraints \ref{eq16}, \ref{eq17} and \ref{eq18}
+then convert this from time slots to flights, i.e.  $\modMatch[{i,j}]$ is the
+flight in which skippers $s[{i}]$ and $s[{j}]$ meet for a match. Finally,
+constraint \ref{eq19} ensures that each skipper's match occurs in different
+flights. Also, since $\modMatch[{i,j}] \equiv \modMatch[{j,i}]$, setting rows
+to be all different also ensures that columns are all different.
 
 %
 % the match array
