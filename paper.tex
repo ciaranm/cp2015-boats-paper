@@ -290,7 +290,14 @@ channeling between parts of the model.}
 \label{schedChanges}
 \end{figure}
 
-The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$, i.e. for each time slot we decide what match takes place. A symmetry break is made at the top of search by forcing the first round to contain the matches (0,1), (2,3), ... i.e. $\forall_{i \in [0..m-1]} ~ \match[{2.i,2i+1}] = i$. The schedule presented has 6 boat changes: there are no boat changes in flight 0 (first flight), flight 1 skipper 6 has a boat change, flight 2 skipper 3 has a boat change, flight 3 it's skipper 4, flight 4 skipper 6, flight 5 skipper 0 and last flight skipper 1.
+The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$, i.e. for each
+time slot we decide what match takes place. A symmetry break is made at the top
+of search by forcing the first round to contain the matches $(0,1), (2,3), \ldots$,
+i.e. $\forall_{i \in [0 \ldots m-1]} ~ \match[{2i,2i+1}] = i$. The schedule
+presented has 6 boat changes: there are no boat changes in flight 0 (first
+flight), flight 1 skipper 6 has a boat change, flight 2 skipper 3 has a boat
+change, flight 3 it's skipper 4, flight 4 skipper 6, flight 5 skipper 0 and
+last flight skipper 1.
 
 \subsection{Stage 2 and 3: minimising imbalance and renaming skippers}
 Having produced a schedule that minimises boat changes, we then minimise criteria 6, imbalance. Assuming the first stage produced a schedule with $\beta$ boat changes we post this as a hard constraint in stage 2, i.e. $\totalBoatChanges \leq \beta$. For each skipper $\sigma$ we introduce a zero/one variable $position[{i,j}]$  (\ref{posA}) which is 1 if and only if skipper $\sigma$ is in a match in time $m.j + i$, i.e. in the $i^{th}$ match of the  $j^{th}$ flight (\ref{posB}). Imbalance is then computed via (\ref{imbA}) for each position, as the absolute amount of over or under expected presence in a given postion. Finally, (\ref{imbB}) we compute the maximum imbalance over all positions for this skipper.
