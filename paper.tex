@@ -46,6 +46,7 @@
 
 \newcommand{\eachOccursExactlyOnce}{\mathrm{eachOccursExactlyOnce}}
 \newcommand{\allDifferent}{\mathrm{allDifferent}}
+\newcommand{\minimise}{\mathrm{minimise}}
 
 \pagestyle{plain}
 \begin{document}
@@ -269,7 +270,7 @@ of boat changes. This is presented in \ref{eq22} and \ref{eq23} below.
 %
 \begin{flalign}
     & \totalBoatChanges = \sum_{i=0}^{n-1} s[{i}].\totalChanges  \label{eq22} \\
-& minimise(\totalBoatChanges) \label{eq23}
+& \minimise(\totalBoatChanges) \label{eq23}
 \end{flalign}
 
 Figure \ref{schedChanges} gives a pictorial view of the model, using the 7
@@ -327,7 +328,7 @@ breaking is imposed at top of search.
 \begin{flalign}
     & \forall_{i \in [0..n-1]} ~ \imbalance[{i}] = \sigma[{i}].\maxImbalance \label{balAllA} \\
 & \maxImbalance = maximum(\imbalance) \label{balAllB} \\
-& minimise(\maxImbalance) \label{balAllC}
+& \minimise(\maxImbalance) \label{balAllC}
 \end{flalign}
 
 \noindent
