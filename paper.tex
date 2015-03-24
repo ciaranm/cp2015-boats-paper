@@ -36,7 +36,7 @@
 \newcommand{\imbalance}{\mathit{imbalance}}
 \newcommand{\maxImbalance}{\mathit{maxImbalance}}
 
-\newcommand{\globalCardinality}{\mathrm{globalCardinality}}
+\newcommand{\eachOccursExactlyOnce}{\mathrm{eachOccursExactlyOnce}}
 \newcommand{\allDifferent}{\mathrm{allDifferent}}
 
 \pagestyle{plain}
@@ -150,7 +150,7 @@ corresponds to timeslots $\timeSlot[{i*m}]$ to $\timeSlot[{m(i+1)-1}]$.
 & \forall_{i \in [0..f]} ~ \state[{i}] = LAST \iff \timeSlot[{(i+1).m - 1}] \geq 0  \label{eq7} \\
 & \forall_{i \in [0..f]} ~ \state[{i}] = BYE \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -1  \label{eq8} \\
 & \forall_{i \in [0..f]} ~ \state[{i}] = END \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -2  \label{eq9} \\
-& \globalCardinality(\timeSlot,\{0,..,n-1\} \setminus \{\sigma\},\{1..1\},\{1 .. 1\})
+& \eachOccursExactlyOnce(\timeSlot, \{0, \ldots, n-1\} \setminus \{\sigma\}\})
 \end{flalign}
 
 In (\ref{eq3}) the array $\timeSlot$ is defined and in (\ref{eq4}) $\state$ is
@@ -163,17 +163,16 @@ flight (\ref{eq7}). If all time slots in a flight are equal to -1 then the
 skipper is in a bye (\ref{eq8}), and if all time slots in a flight are equal to
 -2 then the skipper has finished all his matches (\ref{eq9}).
 
-A global cardinality constraint \cite{globCard} is then imposed on the array
-$\timeSlot$ to ensure that this skipper ($\sigma$)  is in a match with all
-other skippers (i.e. $\{0 \ldots n-1 \} \setminus \{\sigma\}$) once (i.e. $\{1 \ldots
-1\}$) and once only (i.e. $\{1 \ldots 1\}$). The $\state$ variables are then used
-to impose match race criteria 4 (if last in flight $i$ then not first in flight
-$i+1$), criteria 11 (if last in flight $i$ then not in a bye in flight $i+1$)
-and criteria 12 (if flight $i$ is a bye then flight $i$ is not first). In
-addition, we have the rule that if a skipper has finished his matches in flight
-$i$ (i.e. END) then he has finished his matches in flight $i+1$ (and so on).
-These criteria are imposed on the $\state$ variables via a deterministic finite
-automata (DFA) constraint \cite{Pesant04}.
+We must then ensure that each skipper $\sigma$ is in a match with all other
+skippers $\{0, \ldots, n-1\} \setminus \{sigma\}$. This may be done by imposing
+a global cardinality constraint \cite{globCard} on the array $\timeSlot$. The
+$\state$ variables are then used to impose match race criteria 4 (if last in
+flight $i$ then not first in flight $i+1$), criteria 11 (if last in flight $i$
+then not in a bye in flight $i+1$) and criteria 12 (if flight $i$ is a bye then
+flight $i$ is not first). In addition, we have the rule that if a skipper has
+finished his matches in flight $i$ (i.e. END) then he has finished his matches
+in flight $i+1$ (and so on).  These criteria are imposed on the $\state$
+variables via a deterministic finite automata (DFA) constraint \cite{Pesant04}.
 
 The constraints above are shown pictorially in Figure~\ref{skipper5}, and
 corresponds to skipper 5 in the Table~\ref{tab1} schedule. The $\state$ array
