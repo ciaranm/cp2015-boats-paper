@@ -32,12 +32,9 @@
 \title{Constructing Sailing Match Race Schedules: Round Robin Pairing Lists}
 \titlerunning{Match Race Scheduling}
 %\toctitle{}
-\author{Patrick Prosser \and Ciaran McCreesh\thanks{This work was supported by
-the Engineering and Physical Sciences Research Council [grant number
-EP/K503058/1]}\and Craig MacDonald \and Alice Miller}
+\author{Craig MacDonald \and Ciaran McCreesh \and Alice Miller \and Patrick Prosser}
 \institute{University of Glasgow, Glasgow, Scotland \\ \email{patrick.prosser@glasgow.ac.uk}}
-\authorrunning{Prosser, McCreesh, MacDonald, Miller}
-\tocauthor{Patrick Prosser}
+\authorrunning{MacDonald, McCreesh, Miller, Prosser}
 \maketitle
 
 \begin{abstract} 
@@ -48,17 +45,28 @@ The quick brown duck jumped over the lazy pig. The quick brown duck jumped over 
 \coffee{1}
 
 \section{Problem Definition: round robin pairing lists}
-In the ISAF International Umpire's and Match Racing Manual \cite{isaf}, section M.2 Recommended Criteria for Round Robin Pairing Lists,  the following criteria are given:
+In the ISAF International Umpire's and Match Racing Manual \cite{isaf}, section
+M.2 Recommended Criteria for Round Robin Pairing Lists, the following criteria
+are given:
 
 \begin{enumerate}
 \item Each skipper sails against each other skipper once.
-\item When there is an even number of flights, each skipper has the same number of port and starboard assignments. 
-\item When there is an odd number of flights, the first half of the skippers will have one more starboard assignment.
-\item No skipper in the last match of a flight should be in the first match of the next flight. 
-\item No skipper should have more than two consecutive port or starboard assignments.
-\item Each skipper should be assigned to match 1, match 2, etc. in a flight as equally as possible.
-\item In flights with five or more matches no skipper should be in the next-to-last match in a flight and then in the first match of the next flight.
-\item If possible, a skipper should be starboard when meeting the nearest lowest ranked skipper (i.e. \#1 will be starboard against \#2, \#3 will be starboard against \#4).
+\item When there is an even number of flights, each skipper has the same number
+    of port and starboard assignments.
+\item When there is an odd number of flights, the first half of the skippers
+    will have one more starboard assignment.
+\item No skipper in the last match of a flight should be in the first match of
+    the next flight.
+\item No skipper should have more than two consecutive port or starboard
+    assignments.
+\item Each skipper should be assigned to match 1, match 2, etc. in a flight as
+    equally as possible.
+\item In flights with five or more matches no skipper should be in the
+    next-to-last match in a flight and then in the first match of the next
+    flight.
+\item If possible, a skipper should be starboard when meeting the nearest
+    lowest ranked skipper (i.e. \#1 will be starboard against \#2, \#3 will be
+    starboard against \#4).
 \item Close ranked skippers meet in the last flight.
 \item Minimize the number of boat changes.
 \item Skippers in the last match of a flight do not change boats.
