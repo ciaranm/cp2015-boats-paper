@@ -32,6 +32,7 @@
 \newcommand{\eachOccursExactlyOnce}{\mathrm{eachOccursExactlyOnce}}
 \newcommand{\allDifferent}{\mathrm{allDifferent}}
 \newcommand{\minimise}{\mathrm{minimise}}
+\newcommand{\maximum}{\mathrm{maximum}}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
@@ -304,7 +305,7 @@ maximum imbalance over all positions for this skipper.
     & \forall_{i\in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] \in \{0,1\} \label{posA} \\
     & \forall_{i \in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] = 1 \iff \sigma.\timeSlot[{m.j+i}] \geq 0 \label{posB} \\
     & \forall_{i \in [0..m-1]} ~ \imbalance[{i}] = \abs*{\frac{n-1}{m} - \sum_{j=0}^{f-1} \position[{i,j}]} \label{imbA} \\
-& \sigma.\maxImbalance = \sigma.maximum(\sigma.imbalance)  \label{imbB}
+    & \sigma.\maxImbalance = \maximum(\sigma.imbalance)  \label{imbB}
 \end{flalign}
 
 We then capture the maximum imbalance over all skippers (\ref{balAllA} and
@@ -314,7 +315,7 @@ breaking is imposed at top of search.
 
 \begin{flalign}
     & \forall_{i \in [0..n-1]} ~ \imbalance[{i}] = \sigma[{i}].\maxImbalance \label{balAllA} \\
-& \maxImbalance = maximum(\imbalance) \label{balAllB} \\
+& \maxImbalance = \maximum(\imbalance) \label{balAllB} \\
 & \minimise(\maxImbalance) \label{balAllC}
 \end{flalign}
 
