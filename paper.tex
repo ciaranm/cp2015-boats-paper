@@ -36,6 +36,13 @@
 \newcommand{\imbalance}{\mathit{imbalance}}
 \newcommand{\maxImbalance}{\mathit{maxImbalance}}
 
+\newcommand{\START}{\textnormal{\textsc{Start}}}
+\newcommand{\FIRST}{\textnormal{\textsc{First}}}
+\newcommand{\MID}{\textnormal{\textsc{Mid}}}
+\newcommand{\LAST}{\textnormal{\textsc{Last}}}
+\newcommand{\END}{\textnormal{\textsc{End}}}
+\newcommand{\BYE}{\textnormal{\textsc{Bye}}}
+
 \newcommand{\eachOccursExactlyOnce}{\mathrm{eachOccursExactlyOnce}}
 \newcommand{\allDifferent}{\mathrm{allDifferent}}
 
@@ -144,12 +151,12 @@ corresponds to timeslots $\timeSlot[{i*m}]$ to $\timeSlot[{m(i+1)-1}]$.
 & f = \lceil n(n-1)/m  \rceil \label{eq1} \\
 & t = n(n-1)/2 \label{eq2} \\
 & \forall_{\tau \in [0..t-1]} ~ \timeSlot[{\tau}] \in \{-2..t-1\} \setminus \{\sigma\} \label{eq3} \\
-& \forall_{i \in [0..f-1]} ~ \state[{i}] \in \{FIRST,MID,LAST,BYE,END\} \label{eq4} \\
-& \forall_{i \in [0..f]} ~ \state[{i}] = FIRST \iff \timeSlot[{i \cdot m}] \geq 0  \label{eq5} \\
-& \forall_{i \in [0..f]} ~ \state[{i}] = MID \iff  \exists_{j \in [i.m+1 ..  i.m+m-2]} ~ \timeSlot[{j}] \geq 0  \label{eq6} \\
-& \forall_{i \in [0..f]} ~ \state[{i}] = LAST \iff \timeSlot[{(i+1).m - 1}] \geq 0  \label{eq7} \\
-& \forall_{i \in [0..f]} ~ \state[{i}] = BYE \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -1  \label{eq8} \\
-& \forall_{i \in [0..f]} ~ \state[{i}] = END \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -2  \label{eq9} \\
+& \forall_{i \in [0..f-1]} ~ \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{eq4} \\
+& \forall_{i \in [0..f]} ~ \state[{i}] = \FIRST \iff \timeSlot[{i \cdot m}] \geq 0  \label{eq5} \\
+& \forall_{i \in [0..f]} ~ \state[{i}] = \MID \iff  \exists_{j \in [i.m+1 ..  i.m+m-2]} ~ \timeSlot[{j}] \geq 0  \label{eq6} \\
+& \forall_{i \in [0..f]} ~ \state[{i}] = \LAST \iff \timeSlot[{(i+1).m - 1}] \geq 0  \label{eq7} \\
+& \forall_{i \in [0..f]} ~ \state[{i}] = \BYE \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -1  \label{eq8} \\
+& \forall_{i \in [0..f]} ~ \state[{i}] = \END \iff  \forall_{j \in [i.m ..  m.(i+1)-1]} ~ \timeSlot[j] = -2  \label{eq9} \\
 & \eachOccursExactlyOnce(\timeSlot, \{0, \ldots, n-1\} \setminus \{\sigma\}\})
 \end{flalign}
 
@@ -178,8 +185,8 @@ The constraints above are shown pictorially in Figure~\ref{skipper5}, and
 corresponds to skipper 5 in the Table~\ref{tab1} schedule. The $\state$ array
 is presented as coloured boxes, and below that is the $\timeSlot$ array. The
 arrows represent the channeling constraints (\ref{eq5}) to (\ref{eq9}). The
-$\state$ array is coloured with green representing LAST, yellow for MID, blue
-for FIRST, red for LAST and (not shown) pink for BYE. The schedule of
+$\state$ array is coloured with green representing $\LAST$, yellow for $\MID$, blue
+for $\FIRST$, red for $\LAST$ and (not shown) pink for $\BYE$. The schedule of
 Table~\ref{tab1} is reproduced with the matches for skipper 5 emboldened. To
 the right of the schedule is schema for the DFA. Coloured arcs represent a
 transition from one state to another. The DFA is encoded as a set of transition
@@ -188,11 +195,11 @@ state $q_{i}$ to state $q_{j}$ when encountering input $\iota$. In addition we
 specify the accepting states, which are all states except the start state
 (white) and the bye state (pink).
 
-A boat change occurs when a skipper has been in a BYE state in flight $i$ and then is in a match in the next flight $i+1$. This is encoded using the array of zero/one variables (\ref{eq10}) and constraint (\ref{eq11}), and accumulated into $\totalChange$ (\ref{eq12}).
+A boat change occurs when a skipper has been in a $\BYE$ state in flight $i$ and then is in a match in the next flight $i+1$. This is encoded using the array of zero/one variables (\ref{eq10}) and constraint (\ref{eq11}), and accumulated into $\totalChange$ (\ref{eq12}).
 
 \begin{flalign}
     & \forall_{i \in [0..f-2]} ~ \change[{i}] \in \{0,1\} \label{eq10} \\
-    & \forall_{i \in [0..f-2]} ~ \change[{i}] = 1 \iff \state[{i}] = BYE \wedge \state[{i+1}] \neq BYE \label{eq11} \\
+    & \forall_{i \in [0..f-2]} ~ \change[{i}] = 1 \iff \state[{i}] = \BYE \wedge \state[{i+1}] \neq \BYE \label{eq11} \\
     & \totalChange = \sum_{i=0}^{f-2} ~ \change[{i}] \label{eq12}
 \end{flalign}
 
@@ -201,7 +208,7 @@ A boat change occurs when a skipper has been in a BYE state in flight $i$ and th
 \centering
 \includegraphics[height=10.2cm,width=13.2cm]{skipper5.pdf}
 \vspace{-25mm}
-\caption{A pictorial representation of a skipper (skipper 5) with multicoloured state and grey timeslots. The schedule for skipper 5 is in bold and the deterministic finite automata for criteria 4, 11 and 12 is drawn with state START in white, FIRST in blue, MID in yellow, LAST in green, BYE in pink and END in red.}
+\caption{A pictorial representation of a skipper (skipper 5) with multicoloured state and grey timeslots. The schedule for skipper 5 is in bold and the deterministic finite automata for criteria 4, 11 and 12 is drawn with state $\START$ in white, $\FIRST$ in blue, $\MID$ in yellow, $\LAST$ in green, $\BYE$ in pink and $\END$ in red.}
 \label{skipper5}
 \end{figure}
 
