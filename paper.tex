@@ -29,7 +29,7 @@
 \newcommand{\timeSlot}{\mathit{timeSlot}}
 \newcommand{\state}{\mathit{state}}
 \newcommand{\change}{\mathit{change}}
-\newcommand{\totalChange}{\mathit{totalChange}}
+\newcommand{\totalChanges}{\mathit{totalChanges}}
 \newcommand{\totalBoatChanges}{\mathit{totalBoatChanges}}
 \newcommand{\modMatch}{\mathit{modMatch}}
 \newcommand{\position}{\mathit{position}}
@@ -195,12 +195,15 @@ state $q_{i}$ to state $q_{j}$ when encountering input $\iota$. In addition we
 specify the accepting states, which are all states except the start state
 (white) and the bye state (pink).
 
-A boat change occurs when a skipper has been in a $\BYE$ state in flight $i$ and then is in a match in the next flight $i+1$. This is encoded using the array of zero/one variables (\ref{eq10}) and constraint (\ref{eq11}), and accumulated into $\totalChange$ (\ref{eq12}).
+A boat change occurs when a skipper has been in a $\BYE$ state in flight $i$
+and then is in a match in the next flight $i+1$. This is encoded using the
+array of zero/one variables \ref{eq10}, and the constraint (\ref{eq11}), and
+accumulated into $\totalChanges$ (\ref{eq12}).
 
 \begin{flalign}
     & \forall_{i \in [0..f-2]} ~ \change[{i}] \in \{0,1\} \label{eq10} \\
     & \forall_{i \in [0..f-2]} ~ \change[{i}] = 1 \iff \state[{i}] = \BYE \wedge \state[{i+1}] \neq \BYE \label{eq11} \\
-    & \totalChange = \sum_{i=0}^{f-2} ~ \change[{i}] \label{eq12}
+    & \totalChanges = \sum_{i=0}^{f-2} ~ \change[{i}] \label{eq12}
 \end{flalign}
 
 %\vspace{-6mm}
@@ -246,7 +249,7 @@ Finally we have the optimisation criteria (criteria 10) to minimise the number o
 % optimisation criteria 10
 %
 \begin{flalign}
-    & \totalBoatChanges = \sum_{i=0}^{n-1} s[{i}].\totalChange  \label{eq22} \\
+    & \totalBoatChanges = \sum_{i=0}^{n-1} s[{i}].\totalChanges  \label{eq22} \\
 & minimise(\totalBoatChanges) \label{eq23}
 \end{flalign}
 
