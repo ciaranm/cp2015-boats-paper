@@ -319,8 +319,10 @@ maximum imbalance over all positions for this skipper.
 & \sigma.\maxImbalance = \sigma.maximum(\sigma.imbalance)  \label{imbB}
 \end{flalign}
 
-\noindent
-We then capture the maxmum imbalance over all skippers (\ref{balAllA} and \ref{balAllB}) and minimise this (\ref{balAllC}). As before, the decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$ and the same symmetry breaking is imposed at top of search.
+We then capture the maximum imbalance over all skippers (\ref{balAllA} and
+\ref{balAllB}) and minimise this (\ref{balAllC}). As before, the decision
+variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$ and the same symmetry
+breaking is imposed at top of search.
 
 \begin{flalign}
     & \forall_{i \in [0..n-1]} ~ \imbalance[{i}] = \sigma[{i}].\maxImbalance \label{balAllA} \\
