@@ -118,8 +118,14 @@ oriented (stages 3 and 4).}
 \label{tab1}
 \end{table}
 
-\subsection{Stage 1: minimising boat changes}
-The first thing we model is a skipper. A skipper $\sigma$ has a temporal view of his schedulle in the array of constrained integer variables $timeSlot_{0}$ to $timeSlot_{t-1}$ (equation \ref{eq3} below) and a state view in the array of constraint integer variables $state_{0}$ to $state_{f-1}$ (equation \ref{eq4} below), i.e. $state_{i}$ is the state of this skipper in flight $i$ and corresponds to timeslots $timeSlot_{i*m}$ to $timeSlot_{m.(i+1)-1}$.
+\subsection{Stage 1: Minimising Boat Changes}
+
+The first thing we model is a skipper. A skipper $\sigma$ has a temporal view
+of his schedule in the array of constrained integer variables $timeSlot_{0}$
+to $timeSlot_{t-1}$ (equation \ref{eq3} below), and a state view in the array of
+constraint integer variables $state_{0}$ to $state_{f-1}$ (equation \ref{eq4}
+below), i.e. $state_{i}$ is the state of this skipper in flight $i$ and
+corresponds to timeslots $timeSlot_{i*m}$ to $timeSlot_{m.(i+1)-1}$.
 
 \begin{flalign}
 & f = \lceil n(n-1)/m  \rceil \label{eq1} \\
