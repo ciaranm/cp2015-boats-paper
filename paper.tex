@@ -74,8 +74,8 @@ are given:
 \item Skippers have a reasonable sequence of matches and blanks.
 \end{enumerate}
 
-\noindent
-Note: criteria 10, 11 and 12 only apply when there are less boats than skippers
+Note that criteria 10, 11 and 12 only apply when there are fewer boats than
+skippers.
 
 \section{The Constraint Models}
 The schedules are produced in 4 stages. The first stage produces a schedule that respects criteria 1, 4, 11 and 12 and minimises criteria 10 (boat changes). The second stage constructs a schedule that respects criteria 1,4,11,12 again and has criteria 10 as a hard constraint generated from first stage and minimises criteria 6 (balance). This results in a schedule that attempts to minimise boat changes \emph{and} balance. The third stage satisfies criteria 9, and is a simple translation of the schedule produced in stage 2.  The final stage, stage 4, orients skippers within matches to address criteria 2, 3, 5 and 8. 
