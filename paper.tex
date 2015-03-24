@@ -79,15 +79,15 @@ skippers.
 
 \section{The Constraint Models}
 
-The schedules are produced in 4 stages. The first stage produces a schedule
-that respects criteria 1, 4, 11 and 12 and minimises criteria 10 (boat
-changes). The second stage constructs a schedule that respects criteria
-1,4,11,12 again and has criteria 10 as a hard constraint generated from first
-stage and minimises criteria 6 (balance). This results in a schedule that
+The schedules are produced in four stages. The first stage produces a schedule
+that respects criteria 1, 4, 11 and 12, and minimises criteria 10 (boat
+changes). The second stage constructs a schedule that respects criteria 1, 4,
+11, 12 (again), has criteria 10 as a hard constraint generated from first
+stage, and minimises criteria 6 (balance). This results in a schedule that
 attempts to minimise boat changes \emph{and} balance. The third stage satisfies
 criteria 9, and is a simple translation of the schedule produced in stage 2.
-The final stage, stage 4, orients skippers within matches to address criteria
-2, 3, 5 and 8. 
+The final stage, orients skippers within matches to address criteria 2, 3, 5
+and 8.
 
 We now describe the constraint models and processes used in each stage. In the
 text below we assume there are $n$ skipper and $b$ boats, with $m = b/2$
