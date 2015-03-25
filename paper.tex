@@ -170,7 +170,7 @@ $\timeSlot[{m(i+1)-1}]$.
     & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
     & \totalChanges \in \mathbb{N} \label{V4} \tag{V4} \\
     & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i{+}1}] \neq \BYE \label {C4} \tag{C4} \\
-    & \totalChanges = \textstyle\sum_{i=0}^{f{-}2} \change[{i}] \label{C5} \tag{C5}
+    & \totalChanges = \textstyle\sum \change \label{C5} \tag{C5}
 \end{align}
 \end{framed}\begin{framed}
 \begin{align}
@@ -188,7 +188,7 @@ $\timeSlot[{m(i+1)-1}]$.
     & \forall \tau \in \{0 \nldots t{-}1 \} : \nonumber \\
     & \hspace*{1em} \timeVar[{\tau}] \in \{(0,1) \nldots (n{-}2,n{-}1)\} \tag{V7} \label{V7} \\
     & \hspace*{1em} \forall i \in \{0 \nldots n{-}2\} : \forall  j \in \{ i{+}1 \nldots n{-}1 \} : \timeVar[{\tau}] = (i,j) \Leftrightarrow \match[{i,j}] = \tau \tag{C9} \label{C9} \\[0.1cm]
-    & \totalBoatChanges = \textstyle\sum_{i=0}^{n{-}1} \sigma[{i}].\totalChanges  \label{V8} \tag{V8} \\
+    & \totalBoatChanges = \textstyle\sum \sigma.\totalChanges \label{V8} \tag{V8} \\
     & \minimise(\totalBoatChanges) \label{C10} \tag{C10}
 \end{align}
 \end{framed}
