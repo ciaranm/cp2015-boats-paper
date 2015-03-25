@@ -12,6 +12,7 @@
 \usepackage{mathtools}
 \usepackage[rightcaption]{sidecap}
 \usepackage{multicol}
+\usepackage{colortbl}
 \usepackage{booktabs}
 \usepackage{framed}
 \usepackage{coffee2}
@@ -162,7 +163,8 @@ descriptions of the models omit some minor details, however the models are
 available to download\footnote{?? give us a link to the models}.
 
 \begin{SCtable}[2.0][tb]
-    \begin{tabular}{c@{\hspace{1em}}c@{\hspace{0.5em}}c@{\hspace{0.5em}}c}
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{cccc}
         \toprule
         Flight & \multicolumn{3}{c}{Matches} \\ \midrule
         0 & (0,1) & (2,3) & (4,5) \\
@@ -401,9 +403,13 @@ constraint \eqref{C4}, and accumulated into $\totalChanges$
         \node at (-3.8, 0) {
             \begin{minipage}{4.5cm}
                 \centering
-                \begin{tabular}{c@{\hspace{1em}}c@{\hspace{0.5em}}c@{\hspace{0.5em}}c}
+                \setlength{\tabcolsep}{3pt}
+                \setlength{\aboverulesep}{0pt}
+                \setlength{\belowrulesep}{0pt}
+                \setlength{\extrarowheight}{.75ex}
+                \begin{tabular}{c>{\columncolor{uofgcobalt}}c>{\columncolor{uofgsunshine}}c>{\columncolor{uofglawn}}c}
                     \toprule
-                    Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+                    Flight & \multicolumn{3}{c}{Matches} \\[2pt] \midrule
                     0 & (0,1) & (2,3) & \textbf{(4,5)} \\
                     1 & (0,2) & (4,6) & \textbf{(1,5)} \\
                     2 & (2,6) & \textbf{(0,5)} & (1,3) \\
