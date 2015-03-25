@@ -159,17 +159,17 @@ $\timeSlot[{m(i+1)-1}]$.
     &\forall i \in \{0 \nldots f{-}1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V2} \\
     &\forall i \in \{0 \nldots f\}: \label{C1} \tag{C1} \\
     &\begin{alignedat}{3}
-    &\hspace*{1em} \state[{i}] = \FIRST &\ &\Leftrightarrow&&\ \timeSlot[{i \cdot m}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \MID   &\ &\Leftrightarrow&&\ \exists j \in \{i\cdot m{+}1 \nldots i \cdot m{+}m{-}2\} : \timeSlot[{j}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \LAST  &\ &\Leftrightarrow&&\ \timeSlot[{(i{+}1)m {-} 1}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \BYE   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i{+}1){-}1\} : \timeSlot[j] = {-}1 \\
-    &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i{+}1){-}1\} : \timeSlot[j] = {-}2
+    &\hspace*{1em} \state[{i}] = \FIRST &\ &\Leftrightarrow&&\ \timeSlot[{m \cdot i}] \geq 0 \\
+    &\hspace*{1em} \state[{i}] = \MID   &\ &\Leftrightarrow&&\ \exists j \in \{m \cdot i + 1 \nldots m \cdot (i + 1) - 2\} : \timeSlot[{j}] \geq 0 \\
+    &\hspace*{1em} \state[{i}] = \LAST  &\ &\Leftrightarrow&&\ \timeSlot[m \cdot (i + 1) - 1] \geq 0 \\
+    &\hspace*{1em} \state[{i}] = \BYE   &\ &\Leftrightarrow&&\ \forall j \in \{m \cdot i \nldots m \cdot (i + 1) - 1\} : \timeSlot[j] = -1 \\
+    &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{m \cdot i \nldots m \cdot (i + 1) - 1\} : \timeSlot[j] = -2
     \end{alignedat} \nonumber \\
     &\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n{-}1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
     &\validStateSequence(\state) \label{C3} \tag{C3} \\[0.1cm]
     & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
     & \totalChanges \in \mathbb{N} \label{V4} \tag{V4} \\
-    & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i{+}1}] \neq \BYE \label {C4} \tag{C4} \\
+    & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i + 1}] \neq \BYE \label {C4} \tag{C4} \\
     & \totalChanges = \textstyle\sum \change \label{C5} \tag{C5}
 \end{align}
 \end{framed}\begin{framed}
