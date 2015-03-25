@@ -137,7 +137,7 @@ descriptions of the models omit some minor details, however the models are
 available to download\footnote{?? give us a link to the models}.
 
 \begin{SCtable}[2.0][tb]
-    \begin{tabular}{c@{\hspace{1.5em}}ccc}
+    \begin{tabular}{c@{\hspace{1em}}c@{\hspace{0.5em}}c@{\hspace{0.5em}}c}
         \toprule
         Flight & \multicolumn{3}{c}{Matches} \\ \midrule
         0 & (0,1) & (2,3) & (4,5) \\
@@ -266,9 +266,9 @@ constraint \eqref{C4}, and accumulated into $\totalChanges$
     \begin{tikzpicture}
     \begin{scope}[every node/.style={minimum size=2em,inner sep=1}, xshift=-1cm]
         \node (DFAS) [draw, circle, fill=white]                     at (0,  0)   { \textsc{S} };
-        \node (DFAF) [draw, circle, fill=uofgcobalt]                at (2,  1.7) { \textsc{F} };
+        \node (DFAF) [draw, circle, fill=uofgcobalt]                at (2,  1.5) { \textsc{F} };
         \node (DFAM) [draw, circle, fill=uofgsunshine]              at (2,  0)   { \textsc{M} };
-        \node (DFAL) [draw, circle, fill=uofglawn]                  at (2, -1.7) { \textsc{L} };
+        \node (DFAL) [draw, circle, fill=uofglawn]                  at (2, -1.5) { \textsc{L} };
         \node (DFAB) [draw, circle, fill=uofgthistle, text=white]   at (4,  0)   { \textsc{B} };
         \node (DFAE) [draw, circle, fill=uofgpillarbox, text=white] at (6,  0)   { \textsc{E} };
 
@@ -300,7 +300,7 @@ constraint \eqref{C4}, and accumulated into $\totalChanges$
         \draw [->, >=latex, thick] (DFAE) to [out=30, in=-30, looseness=6] (DFAE);
     \end{scope}
 
-    \begin{scope}[yshift=5.5cm, scale=0.85]
+    \begin{scope}[yshift=5cm, scale=0.85]
         \node at (-5, 0) { \textbf{ Skipper 5: } };
 
         \node (AllArray) [anchor=center, draw, rectangle split, rectangle split horizontal, rectangle split parts=7,
@@ -374,19 +374,19 @@ constraint \eqref{C4}, and accumulated into $\totalChanges$
 
     \begin{scope}
         \node at (-3.8, 0) {
-            \begin{minipage}{4cm}
-            \begin{framed}
+            \begin{minipage}{4.5cm}
                 \centering
-                \begin{tabular}{c@{\hspace{3mm}}c@{\hspace{3mm}}c}
-                    (0, 1) & (2, 3) & \textbf{(4, 5)} \\
-                    (0, 2) & (4, 6) & \textbf{(1, 5)} \\
-                    (2, 6) & \textbf{(0, 5)} & (1, 3) \\
-                    \textbf{(5, 6)} & (0, 3) & (1, 4) \\
-                    \textbf{(3, 5)} & (1, 6) & (2, 4) \\
-                    (3, 6) & (0, 4) & \textbf{(2, 5)} \\
-                    (3, 4) & (1, 2) & (0, 6) \\
+                \begin{tabular}{c@{\hspace{1em}}c@{\hspace{0.5em}}c@{\hspace{0.5em}}c}
+                    \toprule
+                    Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+                    0 & (0,1) & (2,3) & \textbf{(4,5)} \\
+                    1 & (0,2) & (4,6) & \textbf{(1,5)} \\
+                    2 & (2,6) & \textbf{(0,5)} & (1,3) \\
+                    3 & \textbf{(5,6)} & (0,3) & (1,4) \\
+                    4 & \textbf{(3,5)} & (1,6) & (2,4) \\
+                    5 & (3,6) & (0,4) & \textbf{(2,5)} \\
+                    6 & (3,4) & (1,2) & (0,6) \\ \bottomrule
                 \end{tabular}
-            \end{framed}
             \end{minipage}
         };
     \end{scope}
