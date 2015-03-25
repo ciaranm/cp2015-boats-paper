@@ -139,12 +139,12 @@ available to download\footnote{?? give us a link to the models}.
 
 \subsection{Stage 1: Minimising Boat Changes}
 
-The first thing we model is a skipper. A skipper $\sigma$ has a temporal view
-of his schedule in the array of constrained integer variables $\timeSlot[0]$ to
-$\timeSlot[{t-1}]$ (\eqref{var:timeSlot} below), and a state view in the array
-of constraint integer variables $\state[0]$ to $\state[{f-1}]$
-(\eqref{var:state} below), i.e.\ $\state[i]$ is the state of this skipper in
-flight $i$ and corresponds to timeslots $\timeSlot[{i \cdot m}]$ to
+The first thing we model, in Figure~\ref{model:skipper}, is a skipper. Each
+skipper $\sigma$ has a temporal view of his schedule in the array of
+constrained integer variables $\timeSlot[0]$ to $\timeSlot[{t-1}]$, and a state
+view in the array of constraint integer variables $\state[0]$ to
+$\state[{f-1}]$. The state of this skipper in flight $i$ is found in
+$\state[i]$, and this corresponds to timeslots $\timeSlot[{i \cdot m}]$ to
 $\timeSlot[{m(i+1)-1}]$.
 
 \begin{figure}
@@ -168,7 +168,7 @@ $\timeSlot[{m(i+1)-1}]$.
 \caption{A skipper-oriented model. A copy of these variables and constraints is
 created for each skipper $\sigma$. The number of skippers is $n$, and $m$ is
 the number of matches in a flight. The number of flights is $f = \lceil
-n(n-1)/m  \rceil$, and there are $t = n(n-1)/2$ matches in total.}
+n(n-1)/m  \rceil$, and there are $t = n(n-1)/2$ matches in total.}\label{model:skipper}
 \end{figure}
 
 In \eqref{var:timeSlot} the array $\timeSlot$ is defined and in
