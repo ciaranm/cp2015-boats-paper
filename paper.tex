@@ -549,26 +549,26 @@ skippers in the last round of the last flight to be $(0,1)$, satisfying criteria
 9. This is a simple linear process. The schedule produced for 7 skippers and 6
 boats is shown in Table~\ref{tab2}.
 
-\begin{table}[tb]
-\begin{center}
-\begin{tabular}{cc} \\
-flight & matches \\ \hline
-0 & (0,6) (2,3) (4,5) \\
-1 & (0,2) (4,1) (6,5) \\
-2 & (2,1) (0,5) (6,3) \\
-3 & (5,1) (0,3) (6,4) \\
-4 & (3,5) (6,1) (2,4) \\
-5 & (3,1) (0,4) (2,5) \\
-6 & (3,4) (6,2) (0,1) \\ \hline
-\end{tabular}
-\end{center}
-\caption{Round-robin schedule with 7 skippers, 6 boats and 7 flights. Result of
-stages 1, 2, and 3. It has 6 boat changes and imbalance 1. An example of
-imbalance is skipper $\sigma[{0}]$ with 2 matches in position 0 (first), 3 in
-position 1 and 1 (mid) in position 2 (last). Perfect balance would be 2 matches
-in each position, only achieved by skipper 2.}
-\label{tab2}
-\end{table}
+\begin{SCtable}[2.0][tb]
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{cccc}
+        \toprule
+        Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+        0 & (0,6) & (2,3) & (4,5) \\
+        1 & (0,2) & (4,1) & (6,5) \\
+        2 & (2,1) & (0,5) & (6,3) \\
+        3 & (5,1) & (0,3) & (6,4) \\
+        4 & (3,5) & (6,1) & (2,4) \\
+        5 & (3,1) & (0,4) & (2,5) \\
+        6 & (3,4) & (6,2) & (0,1) \\ \bottomrule
+    \end{tabular}
+    \caption{A round-robin schedule with 7 skippers, 6 boats and 7 flights,
+        which is the result of stages 1, 2, and 3. It has 6 boat changes
+        and imbalance 1. An example of imbalance is skipper $\sigma[{0}]$
+        with 2 matches in position 0 (first), 3 in position 1 and 1 (mid)
+        in position 2 (last). Perfect balance would be 2 matches in each
+    position, only achieved by skipper 2.}\label{tab2}
+\end{SCtable}
 
 \subsection{Stage 4: Orienting Matches}
 
