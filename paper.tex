@@ -236,24 +236,23 @@ The $\state$ variables are then used to impose match race criteria 4 (if last
 in flight $i$ then not first in flight $i+1$), criteria 11 (if last in flight
 $i$ then not in a bye in flight $i+1$) and criteria 12 (if flight $i$ is a bye
 then flight $i$ is not first).  These criteria are imposed by \eqref{C3}, which
-is a deterministic finite automata (DFA) constraint \cite{Pesant04}.  This
-constraint also ensures that if a skipper has finished his matches in flight
-$i$ (i.e.\ $\END$) then he has finished his matches in flight $i+1$ (and so
-on).
+is a deterministic finite automata (DFA) constraint \cite{Pesant04}. The
+transitions for the DFA are shown pictorially in Figure~\ref{skipper5}: arcs
+represent a transition from one state to another. The DFA is encoded as a set
+of transition objects $\langle q_{i},\iota,q_{j} \rangle$, where a transition
+is made from state $q_{i}$ to state $q_{j}$ when encountering input $\iota$. In
+addition we specify the accepting states, which are all states except the start
+state (white) and the bye state (pink).  This constraint also ensures that if a
+skipper has finished his matches in flight $i$ (i.e.\ $\END$) then he has
+finished his matches in flight $i+1$ (and so on).
 
-The constraints above are shown pictorially in Figure~\ref{skipper5}, and
-corresponds to skipper 5 in the Table~\ref{tab1} schedule. The $\state$ array
+Figure~\ref{skipper5} also shows the skipper-oriented variables and constraints
+corresponding to skipper 5 in the Table~\ref{tab1} schedule. The $\state$ array
 is presented as coloured boxes, and below that is the $\timeSlot$ array. The
 arrows represent the channeling constraints \eqref{C1}. The
 $\state$ array is coloured with green representing $\LAST$, yellow for $\MID$, blue
 for $\FIRST$, red for $\LAST$ and (not shown) pink for $\BYE$. The schedule of
-Table~\ref{tab1} is reproduced with the matches for skipper 5 emboldened. To
-the right of the schedule is schema for the DFA. Coloured arcs represent a
-transition from one state to another. The DFA is encoded as a set of transition
-objects $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from
-state $q_{i}$ to state $q_{j}$ when encountering input $\iota$. In addition we
-specify the accepting states, which are all states except the start state
-(white) and the bye state (pink).
+Table~\ref{tab1} is reproduced with the matches for skipper 5 emboldened.
 
 A boat change occurs when a skipper has been in a $\BYE$ state in flight $i$
 and then is in a match in the next flight $i+1$. This is encoded using the
@@ -300,6 +299,8 @@ accumulated into $\totalChanges$ (\ref{V4},~\ref{C5}).
     \end{scope}
 
     \begin{scope}[yshift=5.5cm, scale=0.85]
+        \node at (-5, 0) { \textbf{ Skipper 5: } };
+
         \node (AllArray) [anchor=center, draw, rectangle split, rectangle split horizontal, rectangle split parts=7,
             rectangle split part fill={uofglawn,uofglawn,uofgsunshine,uofgcobalt,uofgcobalt,uofglawn,uofgpillarbox}] at (0, 0) {
             \nodepart[text width=2em, align=center] {one}   \textsc{L}
