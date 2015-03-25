@@ -16,6 +16,9 @@
 \usepackage{framed}
 \usepackage{coffee2}
 
+\usepackage{color}
+\newcommand{\todo}[1]{\textcolor{blue}{#1}}
+
 \newcommand{\match}{\mathit{match}}
 \newcommand{\timeSlot}{\mathit{timeSlot}}
 \newcommand{\state}{\mathit{state}}
@@ -52,30 +55,42 @@
 \title{Constructing Sailing Match Race Schedules: Round Robin Pairing Lists}
 \titlerunning{Match Race Scheduling}
 %\toctitle{}
-\author{Craig MacDonald \and Ciaran McCreesh \and Alice Miller \and Patrick Prosser}
+\author{Craig Macdonald \and Ciaran McCreesh \and Alice Miller \and Patrick Prosser}
 \institute{University of Glasgow, Glasgow, Scotland \\ \email{patrick.prosser@glasgow.ac.uk}}
-\authorrunning{MacDonald, McCreesh, Miller, Prosser}
+\authorrunning{Macdonald, McCreesh, Miller, Prosser}
 \maketitle
 
 \begin{abstract} 
-The quick brown duck jumped over the lazy pig. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog.
+\todo{The quick brown duck jumped over the lazy pig. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog.}
 \end{abstract}
 
-\section{Introduction}
-\coffee{1}
+\section{Introduction}\coffee{1}
+Round robin competition scehdules represent a rich area for applications of constraint programming. This work describes a particular round robin competition format that arises from sailing, known as match racing. In particular, the competitors, known formally as {\em skippers} compete against each other in a series of matches taking place in rounds (known as {\em flights}). For a match, each skipper is placed in a boat.
 
-\section{Problem Definition: Round Robin Pairing Lists}
+The guidelines for running match racing events~\cite{isaf} places a number of criteria on how the competiting skippers are scheduled into flights and matches, known as pairing lists. Several of these criteria are applicable when the number of skippers exceeds the number of available boats, in which case skippers have to change in and out of boats, and are allowed time in the schedule to check and fine-tune the boat they change into.
 
-In the ISAF ``International Umpires' and Match Racing Manual'' \cite{isaf}, section
-M.2 Recommended Criteria for Round Robin Pairing Lists, the following criteria
-are given:
+While the number of boats and skippers involved is typically not numerous (e.g.\ upto 10 of each), the creations of valid schedules satisfying all constraints is unachievable without automation. Hence, this paper documents our efforts in automating the creation of valid schedules. This is achieved \todo{through ... symmettry breaking ...,  etc. We believe that the methods detailed here are applicable to other problems (example?), and are of interest to the community. }
 
+\todo{Therefore the contributions of this paper are hunner'-fold: TODO}
+
+The remainder of this paper is structured as follows: Section~\ref{sec:definition} provides an overview of the criteria outlined for creating match racing pairing lists; Section~\ref{sec:samples} discusses several sample schedules, while concluding remarks follow in Section~\ref{sec:conclusions}.
+
+\section{Problem Definition: Round Robin Pairing Lists}\label{sec:definition}
+
+
+In the match racing format of sailing events, the criteria for generated match racing schedules (pairing lists) are given in ISAF ``International Umpires' and Match Racing Manual'' \cite{isaf}, section
+M.2 Recommended Criteria for Round Robin Pairing Lists. We detail these criteria below.
+
+\begin{framed}
 \begin{enumerate}
 \item Each skipper sails against each other skipper once.
-\item When there is an even number of flights, each skipper has the same number
-    of port and starboard assignments.
-\item When there is an odd number of flights, the first half of the skippers
+\item *When skippers have an even number of matches, they have the same number of port and starboard assignments.
+\item *When skippers have an odd number of matches, the first half of the skippers
     will have one more starboard assignment.
+%\item When there is an even number of flights, each skipper has the same number
+%    of port and starboard assignments.
+%\item When there is an odd number of flights, the first half of the skippers
+%    will have one more starboard assignment.
 \item No skipper in the last match of a flight should be in the first match of
     the next flight.
 \item No skipper should have more than two consecutive port or starboard
@@ -94,11 +109,21 @@ are given:
 \item Skippers in new boats do not sail in the first match of the next flight.
 \item Skippers have a reasonable sequence of matches and blanks.
 \end{enumerate}
-
 Note that criteria 10, 11 and 12 only apply when there are fewer boats than
 skippers.
+\end{framed}
 
-\section{The Constraint Models}
+Firstly, we note that we have rephrased criteria 2 \& 3 (denoted *) to clarify an error in \cite{isaf}. We further outline the key aspects of the criteria, which motivate and permit understanding of our proposal solution.
+
+In particular, the order of matches within a flight are constrained, as well as the order of flights, to permit fair schedules that provide the opportunity for skippers to change boats, etc.
+
+Next, we note that skippers can be ranked prior to an event -- based on their performance in previous events~\footnote{\url{http://www.sailing.org/rankings/match/}} -- which is used to seed the skippers. The ordering of skippers within a match signifies their starting position (port or starboard) -- as skippers allocated the starboard starting position gain a small competitive advantage in that match - criteria 8 accomplishes the seedings.
+
+Finally, it can be observed that criteria 10 is ambigious: - this could be interpreted on an schedule basis: i.e.\ to minimise the overall number of changes in the entire pairing list schedule; or alterantively as well as a fair, but minimal number of changes across all skippers. In our work, we take the latter viewpoint. 
+
+In the following, we detail the constraint models (Section~\ref{sec:models}), while some example schedules are presented in Section~\ref{sec:samples}.
+
+\section{The Constraint Models}\label{sec:models}
 
 The schedules are produced in four stages. The first stage produces a schedule
 that respects criteria 1, 4, 11 and 12, and minimises criteria 10 (boat
@@ -387,8 +412,7 @@ zero/one variables for each skipper is shown on the left. Bottom right is the
 DFA, and top right is the final schedule produced from stages 1 to 4. The
 schedule has 6 boat changes and a maximum imbalance of 1. Three days CPU time
 was devoted to stages 1 and 2. Stages 3 and 4 completed in 15 milliseconds. The
-schedule presented here is new, not appearing in the ISAF World Sailing
-Umpire's Manual.
+schedule presented here is new, not appearing in the example schedules provided in \cite{isaf}.%ISAF World Sailing Umpire's Manual
 
 \begin{figure}[tb]
 \centering
@@ -402,11 +426,12 @@ of the authors.}
 \label{oriented}
 \end{figure}
 
-\section{Sample Schedules}
+\section{Sample Schedules}\label{sec:samples}
 
 \subsection{Discussion}
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusions}
+
 
 \section*{Acknowledgments}
 We would like to thank our parents, God, and all his angels.
