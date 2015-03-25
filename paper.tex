@@ -147,12 +147,13 @@ $\state[{f-1}]$. The state of this skipper in flight $i$ is found in
 $\state[i]$, and this corresponds to timeslots $\timeSlot[{i \cdot m}]$ to
 $\timeSlot[{m(i+1)-1}]$.
 
-\begin{figure}
+\begin{figure}[p]
 \setlength{\mathindent}{0pt}\setlength{\abovedisplayskip}{0pt}\setlength{\belowdisplayskip}{0pt}
 \begin{framed}
 \begin{align}
     &\forall \tau \in \{0 \nldots t-1\}: \timeSlot[{\tau}] \in \{-2 \nldots t-1\} \setminus \{\sigma\} \label{var:timeSlot} \tag{V1} \\
     &\forall i \in \{0 \nldots f-1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V2} \\
+    \noalign{\smallskip \nonumber}
     &\forall i \in \{0 \nldots f\}: \label{C1} \tag{C1} \\
     &\begin{alignedat}{3}
     &\hspace*{1em} \state[{i}] = \FIRST &\ &\Leftrightarrow&&\ \timeSlot[{i \cdot m}] \geq 0 \\
@@ -161,8 +162,14 @@ $\timeSlot[{m(i+1)-1}]$.
     &\hspace*{1em} \state[{i}] = \BYE   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i+1)-1\} : \timeSlot[j] = -1 \\
     &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i+1)-1\} : \timeSlot[j] = -2
     \end{alignedat} \nonumber \\
-&\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n-1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
-&\validStateSequence(\state) \label{C3} \tag{C3}
+    &\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n-1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
+    &\validStateSequence(\state) \label{C3} \tag{C3} \\
+    \noalign{\bigskip \nonumber}
+    & \forall i \in \{0 \nldots f-2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
+    & \totalChanges \in \mathbb{N} \label{V4} \tag{V4} \\
+    \noalign{\smallskip \nonumber}
+    & \forall i \in \{0 \nldots f-2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i+1}] \neq \BYE \label {C4} \tag{C4} \\
+    & \totalChanges = \textstyle\sum_{i=0}^{f-2} \change[{i}] \label{C5} \tag{C5}
 \end{align}
 \end{framed}
 \caption{A skipper-oriented model. A copy of these variables and constraints is
@@ -212,14 +219,8 @@ specify the accepting states, which are all states except the start state
 
 A boat change occurs when a skipper has been in a $\BYE$ state in flight $i$
 and then is in a match in the next flight $i+1$. This is encoded using the
-array of zero/one variables \ref{eq10}, and the constraint (\ref{eq11}), and
-accumulated into $\totalChanges$ (\ref{eq12}).
-
-\begin{flalign}
-    & \forall_{i \in [0..f-2]} ~ \change[{i}] \in \{0,1\} \label{eq10} \\
-    & \forall_{i \in [0..f-2]} ~ \change[{i}] = 1 \iff \state[{i}] = \BYE \wedge \state[{i+1}] \neq \BYE \label{eq11} \\
-    & \totalChanges = \sum_{i=0}^{f-2} ~ \change[{i}] \label{eq12}
-\end{flalign}
+array of zero/one variables \eqref{V3}, and the constraint \eqref{C4}, and
+accumulated into $\totalChanges$ (\ref{V4},~\ref{C5}).
 
 \begin{figure}[tb]
 \centering
