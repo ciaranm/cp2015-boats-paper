@@ -459,6 +459,12 @@ perspective and the temporal perspective using \eqref{C9}.
 (criteria 10) to minimise the number of boat changes. This is handled by
 \eqref{V8} and \eqref{C10}.
 
+\paragraph{Decision variables:} The decision variables are $\timeVar[{0}]$ to
+$\timeVar[{t-1}]$, i.e.\ for each time slot we decide what match takes place. A
+symmetry break is made at the top of search by forcing the first round to
+contain the matches $(0,1), (2,3), \nldots$, i.e.\ $\forall i \in \{0 \nldots
+{m-1}\} : \match[{2i, 2i+1}] = i$.
+
 \bigskip \noindent
 Figure \ref{schedChanges} gives a pictorial view of the entire model, using the
 7 skipper and 6 boat problem. On the right we have the 7 skippers with their
@@ -471,12 +477,6 @@ The schedule presented has 6 boat changes: there are no boat changes in flight
 0 (first flight), in flight 1 skipper 6 has a boat change, in flight 2 skipper
 3 has a boat change, in flight 3 skipper 4, in flight 4 skipper 6, in flight 5
 skipper 0, and flight 6 skipper 1.
-
-\paragraph{Decision variables:} The decision variables are $\timeVar[{0}]$ to
-$\timeVar[{t-1}]$, i.e.\ for each time slot we decide what match takes place. A
-symmetry break is made at the top of search by forcing the first round to
-contain the matches $(0,1), (2,3), \nldots$, i.e.\ $\forall i \in \{0 \nldots
-{m-1}\} : \match[{2i, 2i+1}] = i$.
 
 \begin{figure}[tb]
 \centering
