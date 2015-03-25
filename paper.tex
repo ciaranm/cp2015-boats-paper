@@ -488,39 +488,64 @@ channeling between parts of the model.}
 \label{schedChanges}
 \end{figure}
 
-\subsection{Stages 2 and 3: Minimising Imbalances and Renaming Skippers}
+\subsection{Stage 2: Minimising Imbalances}
 
 Having produced a schedule that minimises boat changes, we then minimise
-criteria 6, imbalance. Assuming the first stage produced a schedule with
-$\beta$ boat changes we post this as a hard constraint in stage 2, i.e.\
-$\totalBoatChanges \leq \beta$. For each skipper $\sigma$ we introduce a
-zero/one variable $position[{i,j}]$  (\ref{posA}) which is 1 if and only if
-skipper $\sigma$ is in a match in time $m \cdot j + i$, i.e.\ in the $i^{th}$ match
-of the  $j^{th}$ flight (\ref{posB}). Imbalance is then computed via
-(\ref{imbA}) for each position, as the absolute amount of over or under
-expected presence in a given position. Finally, (\ref{imbB}) we compute the
-maximum imbalance over all positions for this skipper.
+criteria 6, imbalance, by extending the model as in Figure~\ref{model:stage2}.
+Assuming the first stage produced a schedule with $\beta$ boat changes we post
+this as a hard constraint \eqref{C11} in stage 2. For each skipper $\sigma$ we
+introduce a zero/one variable $position[{i,j}]$ \eqref{V9} which is 1 if and
+only if skipper $\sigma$ is in a match in time $m \cdot j + i$, i.e.\ in the
+$i^{th}$ match of the  $j^{th}$ flight \eqref{C12}. Imbalance \eqref{V10} is then computed
+for each position, as the absolute amount of over or under
+expected presence in a given position \eqref{C13}. Finally, we compute the
+maximum imbalance over all positions for this skipper (\ref{V11}, \ref{C14}).
 
-\begin{flalign}
-    & \forall_{i\in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] \in \{0,1\} \label{posA} \\
-    & \forall_{i \in [0..m-1]} ~ \forall_{j \in [0..f-1]} ~ \sigma.\position[{i,j}] = 1 \iff \sigma.\timeSlot[{m.j+i}] \geq 0 \label{posB} \\
-    & \forall_{i \in [0..m-1]} ~ \imbalance[{i}] = \abs*{\frac{n-1}{m} - \sum_{j=0}^{f-1} \position[{i,j}]} \label{imbA} \\
-    & \sigma.\maxImbalance = \maximum(\sigma.imbalance)  \label{imbB}
-\end{flalign}
+\begin{figure}[tb]
+\setlength{\mathindent}{1em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovecaptionskip}{0pt}
+\begin{framed}
+\begin{align}
+    \intertext{The objective value from stage 1 is used as a hard constraint:\smallskip}
+    & \totalBoatChanges \leq \beta \tag{C11} \label{C11}
+\end{align}
+\end{framed}\begin{framed}
+\begin{align}
+    \intertext{A copy of these variables and constraints is created for each skipper $\sigma$:\smallskip}
+    & \forall i \in \{ 0 \nldots m{-}1 \} : \forall j \in \{ 0 \nldots f{-}1 \} : \nonumber \\
+    & \hspace*{1em} \position[{i,j}] \in \{0,1\} \tag{V9} \label{V9} \\
+    & \hspace*{1em} \position[{i,j}] = 1 \Leftrightarrow \timeSlot[{m.j+i}] \geq 0 \tag{C12} \label{C12} \\
+    & \forall i \in \{ 0 \nldots m{-}1 \} : \nonumber \\
+    & \hspace*{1em} \imbalance[{i}] \in \mathbb{N} \label{V10} \tag{V10} \\
+    & \hspace*{1em} \imbalance[{i}] = \abs*{\frac{n-1}{m} - \sum_{j=0}^{f-1} \position[{i,j}]} \label{C13} \tag{C13} \\
+    & \maxImbalance \in \mathbb{N} \label{V11} \tag{V11} \\
+    & \maxImbalance = \maximum(imbalance) \label{C14} \tag{C14}
+\end{align}
+\end{framed}\begin{framed}
+\begin{align}
+    \intertext{We minimise the maximum imbalance over all skippers:\smallskip}
+    & \forall i \in \{ 0 \nldots n{-}1 \} : \imbalance[{i}] \equiv \sigma[{i}].\maxImbalance \label{V12} \tag{V12} \\
+    & \maxImbalance \in \mathbb{N} \label{V13} \tag{V13} \\
+    & \maxImbalance = \maximum(\imbalance) \label{C15} \tag{C15} \\
+    & \minimise(\maxImbalance) \label{C16} \tag{C16}
+\end{align}
+\end{framed}
+\caption{Additions to the constraint model in Figure~\ref{model:stage1} for
+stage 2. The constant $\beta$ is the minimum number of boat changes found in
+stage 1.}\label{model:stage2}
+\end{figure}
 
-We then capture the maximum imbalance over all skippers (\ref{balAllA} and
-\ref{balAllB}) and minimise this (\ref{balAllC}). As before, the decision
-variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$ and the same symmetry
-breaking is imposed at top of search.
+We then capture the maximum imbalance over all skippers (\ref{V12}, \ref{V13}
+and \ref{C15}) and minimise this \eqref{C16}. As before, the decision variables
+are $\timeVar[{0}]$ to $\timeVar[{t-1}]$ and the same symmetry breaking is
+imposed at top of search.
 
-\begin{flalign}
-    & \forall_{i \in [0..n-1]} ~ \imbalance[{i}] = \sigma[{i}].\maxImbalance \label{balAllA} \\
-& \maxImbalance = \maximum(\imbalance) \label{balAllB} \\
-& \minimise(\maxImbalance) \label{balAllC}
-\end{flalign}
+\subsection{Stage 3: Renaming Skippers}
 
 Stage 3 then takes as input the schedule produced in stage 2 and renames
-skippers in the last round of the last flight to be (0,1), satisfying criteria
+skippers in the last round of the last flight to be $(0,1)$, satisfying criteria
 9. This is a simple linear process. The schedule produced for 7 skippers and 6
 boats is shown in Table~\ref{tab2}.
 
