@@ -139,43 +139,63 @@ available to download\footnote{?? give us a link to the models}.
 
 \subsection{Stage 1: Minimising Boat Changes}
 
-The first thing we model, in Figure~\ref{model:skipper}, is a skipper. Each
-skipper $\sigma$ has a temporal view of his schedule in the array of
-constrained integer variables $\timeSlot[0]$ to $\timeSlot[{t-1}]$, and a state
-view in the array of constraint integer variables $\state[0]$ to
+The first thing we model, in the first half of Figure~\ref{model:stage1}, is a
+skipper. Each skipper $\sigma$ has a temporal view of his schedule in the array
+of constrained integer variables $\timeSlot[0]$ to $\timeSlot[{t-1}]$, and a
+state view in the array of constraint integer variables $\state[0]$ to
 $\state[{f-1}]$. The state of this skipper in flight $i$ is found in
 $\state[i]$, and this corresponds to timeslots $\timeSlot[{i \cdot m}]$ to
 $\timeSlot[{m(i+1)-1}]$.
 
 \begin{figure}[p]
-\setlength{\mathindent}{0pt}\setlength{\abovedisplayskip}{0pt}\setlength{\belowdisplayskip}{0pt}
+\setlength{\mathindent}{1em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovecaptionskip}{0pt}
 \begin{framed}
 \begin{align}
-    &\forall \tau \in \{0 \nldots t-1\}: \timeSlot[{\tau}] \in \{-2 \nldots t-1\} \setminus \{\sigma\} \label{var:timeSlot} \tag{V1} \\
-    &\forall i \in \{0 \nldots f-1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V2} \\
-    \noalign{\smallskip \nonumber}
+    \intertext{A copy of these variables and constraints is created for each skipper $\sigma$:\smallskip}
+    &\forall \tau \in \{0 \nldots t{-}1\}: \timeSlot[{\tau}] \in \{{-}2 \nldots t{-}1\} \setminus \{\sigma\} \label{var:timeSlot} \tag{V1} \\
+    &\forall i \in \{0 \nldots f{-}1\}: \state[{i}] \in \{\FIRST,\MID,\LAST,\BYE,\END\} \label{var:state} \tag{V2} \\
     &\forall i \in \{0 \nldots f\}: \label{C1} \tag{C1} \\
     &\begin{alignedat}{3}
     &\hspace*{1em} \state[{i}] = \FIRST &\ &\Leftrightarrow&&\ \timeSlot[{i \cdot m}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \MID   &\ &\Leftrightarrow&&\ \exists j \in \{i\cdot m+1 \nldots i \cdot m+m-2\} : \timeSlot[{j}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \LAST  &\ &\Leftrightarrow&&\ \timeSlot[{(i+1)m - 1}] \geq 0 \\
-    &\hspace*{1em} \state[{i}] = \BYE   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i+1)-1\} : \timeSlot[j] = -1 \\
-    &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i+1)-1\} : \timeSlot[j] = -2
+    &\hspace*{1em} \state[{i}] = \MID   &\ &\Leftrightarrow&&\ \exists j \in \{i\cdot m{+}1 \nldots i \cdot m{+}m{-}2\} : \timeSlot[{j}] \geq 0 \\
+    &\hspace*{1em} \state[{i}] = \LAST  &\ &\Leftrightarrow&&\ \timeSlot[{(i{+}1)m {-} 1}] \geq 0 \\
+    &\hspace*{1em} \state[{i}] = \BYE   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i{+}1){-}1\} : \timeSlot[j] = {-}1 \\
+    &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{i \cdot m \nldots m \cdot (i{+}1){-}1\} : \timeSlot[j] = {-}2
     \end{alignedat} \nonumber \\
-    &\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n-1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
-    &\validStateSequence(\state) \label{C3} \tag{C3} \\
-    \noalign{\bigskip \nonumber}
-    & \forall i \in \{0 \nldots f-2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
+    &\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n{-}1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
+    &\validStateSequence(\state) \label{C3} \tag{C3} \\[0.1cm]
+    & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
     & \totalChanges \in \mathbb{N} \label{V4} \tag{V4} \\
-    \noalign{\smallskip \nonumber}
-    & \forall i \in \{0 \nldots f-2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i+1}] \neq \BYE \label {C4} \tag{C4} \\
-    & \totalChanges = \textstyle\sum_{i=0}^{f-2} \change[{i}] \label{C5} \tag{C5}
+    & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i{+}1}] \neq \BYE \label {C4} \tag{C4} \\
+    & \totalChanges = \textstyle\sum_{i=0}^{f{-}2} \change[{i}] \label{C5} \tag{C5}
+\end{align}
+\end{framed}\begin{framed}
+\begin{align}
+    \intertext{Match and temporal perspectives:\smallskip}
+    & \forall i \in \{0 \nldots n{-}2\} : \forall j \in \{ i{+}1 \nldots n{-}1 \} : \nonumber \\
+    & \hspace*{1em} \match[{i,j}] \in \{0..t{-}1\} \tag{V5} \label{V5} \\
+    & \hspace*{1em} \match[{j,i}] \equiv \match[{i,j}] \nonumber \\
+    & \hspace*{1em} \forall k \in \{0 \nldots t{-}1 \} : \nonumber \\
+    & \hspace*{2em} \match[{i,j}] = k \Leftrightarrow \sigma[{i}].\timeSlot[{k}] = j \wedge \sigma[{j}].\timeSlot[{k}] = i \tag{C6} \label{C6} \\[0.1cm]
+    & \forall i \in \{0 \nldots n{-}2\} : \forall j \in \{ i{+}1 \nldots n{-}1 \} \nonumber : \\
+    & \hspace*{1em} \modMatch[{i,j}] \in \{0..f{-}1\} \label{V6} \tag{V6} \\
+    & \hspace*{1em} \modMatch[{j,i}] \equiv \modMatch[{i,j}] \nonumber  \\
+    & \hspace*{1em} \modMatch[{i,j}] = \match[{i,j}] / m \tag{C7} \label{C7} \\
+    & \forall i \in \{0 \nldots n{-}1 \} : \allDifferent(\modMatch[{i}]) \tag{C8} \label{C8} \\[0.1cm]
+    & \forall \tau \in \{0 \nldots t{-}1 \} : \nonumber \\
+    & \hspace*{1em} \timeVar[{\tau}] \in \{(0,1) \nldots (n{-}2,n{-}1)\} \tag{V7} \label{V7} \\
+    & \hspace*{1em} \forall i \in \{0 \nldots n{-}2\} : \forall  j \in \{ i{+}1 \nldots n{-}1 \} : \timeVar[{\tau}] = (i,j) \Leftrightarrow \match[{i,j}] = \tau \tag{C9} \label{C9} \\[0.1cm]
+    & \totalBoatChanges = \textstyle\sum_{i=0}^{n{-}1} \sigma[{i}].\totalChanges  \label{V8} \tag{V8} \\
+    & \minimise(\totalBoatChanges) \label{C10} \tag{C10}
 \end{align}
 \end{framed}
-\caption{A skipper-oriented model. A copy of these variables and constraints is
-created for each skipper $\sigma$. The number of skippers is $n$, and $m$ is
-the number of matches in a flight. The number of flights is $f = \lceil
-n(n-1)/m  \rceil$, and there are $t = n(n-1)/2$ matches in total.}\label{model:skipper}
+\caption{Our constraint model, from a skipper perspective (top) and a match and
+temporal perspective (below). The number of skippers is $n$, and $m$ is the
+number of matches in a flight. The number of flights is $f = \lceil n(n-1)/m
+\rceil$, and there are $t = n(n-1)/2$ matches in total.}\label{model:stage1}
 \end{figure}
 
 In \eqref{var:timeSlot} the array $\timeSlot$ is defined and in
@@ -234,58 +254,31 @@ in pink and $\END$ in red.}
 \end{figure}
 
 We are now in a position to model criteria 1 (each skipper sails against every
-other skipper) and optimisation criteria 10 (minimise boat changes).  In
-\ref{eq13}, \ref{eq14} and \ref{eq15} we present a match perspective of the
-schedule, using a two dimensional array of variables $\match$, where
-$\match[{i,j}]$ is the time slot that skippers $s[{i}]$ and $s[{j}]$ meet in a
-match. Only the half above the diagonal is represented, and the lower half is
-made up of exactly the same variables, i.e.\ $\match[{i,j}]$ is \emph{exactly}
-the same constrained variable as $\match[{j,i}]$. Constraint \ref{eq15} states
-that  a match between skippers $s[{i}]$ and $s[{j}]$ takes place at time $k$
-(i.e.\ $\match[{i,j}] = k$) if and only if  skipper $s[{i}]$'s $k^{th}$ time
-slot is skipper $s[{j}]$ and conversely that skipper $s[{j}]$'s $k^{th}$ time
-slot is skipper $s[{i}]$).  Constraints \ref{eq16}, \ref{eq17} and \ref{eq18}
-then convert this from time slots to flights, i.e.\ $\modMatch[{i,j}]$ is the
-flight in which skippers $s[{i}]$ and $s[{j}]$ meet for a match. Finally,
-constraint \ref{eq19} ensures that each skipper's match occurs in different
+other skipper) and optimisation criteria 10 (minimise boat changes).  In the
+second half of Figure~\ref{model:stage1} we present a match perspective of the
+schedule, using a two dimensional array of variables $\match$ \eqref{V5}, where
+$\match[{i,j}]$ is the time slot that skippers $\sigma[{i}]$ and $\sigma[{j}]$
+meet in a match. Only the half above the diagonal is represented, and the lower
+half is made up of exactly the same variables, i.e.\ $\match[{i,j}]$ is
+\emph{exactly} the same constrained variable as $\match[{j,i}]$. Constraint
+\eqref{C6} states that  a match between skippers $\sigma[{i}]$ and
+$\sigma[{j}]$ takes place at time $k$ (i.e.\ $\match[{i,j}] = k$) if and only
+if  skipper $\sigma[{i}]$'s $k^{th}$ time slot is skipper $\sigma[{j}]$ and
+conversely that skipper $\sigma[{j}]$'s $k^{th}$ time slot is skipper
+$\sigma[{i}]$). Variables \eqref{V6} and constraints \eqref{C7} then convert
+this from time slots to flights, i.e.\ $\modMatch[{i,j}]$ is the flight in
+which skippers $\sigma[{i}]$ and $\sigma[{j}]$ meet for a match. Finally,
+constraint \eqref{C8} ensures that each skipper's match occurs in different
 flights. Also, since $\modMatch[{i,j}] \equiv \modMatch[{j,i}]$, setting rows
 to be all different also ensures that columns are all different.
 
-%
-% the match array
-%
-\begin{flalign}
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~\match[{i,j}] \in \{0..t-1\} \label{eq13} \\
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~\match[{j,i}] \equiv \match[{i,j}] \label{eq14} \\
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \forall_{k \in [0..t-1]} ~ \match[{i,j}] = k \iff s[{i}].\timeSlot[{k}] = j  ~ \wedge ~ s[{j}].\timeSlot[{k}] = i  \label{eq15} \\
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \modMatch[{i,j}] \in \{0..f-1\} \label{eq16} \\
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \modMatch[{j,i}] \equiv \modMatch[{i,j}] \label{eq17} \\
-    & \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \modMatch[{i,j}] = \frac{\match[{i,j}]}{m} \label{eq18} \\
-    & \forall_{i \in [0..n-1]} ~ \allDifferent(\modMatch[{i}]) \label{eq19}
-\end{flalign}
-
-We now take a temporal view (\ref{eq20}), such that $\timeVar[{\tau}]$ is a pair
-$(i,j)$, stating that at time $\tau$ skippers $s[{i}]$ and $s[{j}]$ are in a
-match, i.e.\ we channel between the match-perspective and the
-temporal-perspective.
-%
-% one dimensional time and decision variables
-%
-\begin{flalign}
-    & \forall_{\tau \in [0..t-1]} ~ \timeVar[{\tau}] \in \{(0,1) .. (n-2,n-1)\} \label{eq20} \\
-    & \forall_{\tau \in [0 .. t-1]} ~ \forall_{i \in [0..n-2]} ~ \forall_{j \in [i+1..n-1]}  ~ \timeVar[{\tau}] = (i,j) \iff \match[{i,j}] = \tau \label{eq21}
-\end{flalign}
+We now take a temporal view \eqref{V7}, such that $\timeVar[{\tau}]$ is a pair
+$(i,j)$, stating that at time $\tau$ skippers $\sigma[{i}]$ and $\sigma[{j}]$
+are in a match. We channel between the match perspective and the
+temporal perspective using \eqref{C9}.
 
 Finally we have the optimisation criteria (criteria 10) to minimise the number
-of boat changes. This is presented in \ref{eq22} and \ref{eq23} below.
-
-%
-% optimisation criteria 10
-%
-\begin{flalign}
-    & \totalBoatChanges = \sum_{i=0}^{n-1} s[{i}].\totalChanges  \label{eq22} \\
-& \minimise(\totalBoatChanges) \label{eq23}
-\end{flalign}
+of boat changes. This is handled by \eqref{V8} and \eqref{C10}.
 
 Figure \ref{schedChanges} gives a pictorial view of the model, using the 7
 skipper and 6 boat problem. On the right we have the 7 skippers with their
