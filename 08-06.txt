@@ -1,0 +1,20 @@
+8 6
+(2,7) (3,0) (5,4) 
+(0,2) (4,3) (7,5) 
+(0,4) (7,6) (5,3) 
+(4,6) (5,0) (3,1) 
+(6,5) (3,2) (1,4) 
+(6,3) (4,7) (2,1) 
+(7,3) (1,6) (4,2) 
+(7,1) (2,5) (6,0) 
+(5,1) (0,7) (6,2) 
+(1,0) (-1,-1) (-1,-1) 
+nodes: 11   cpu: 34
+starboardCount: 0 4
+starboardCount: 1 4
+starboardCount: 2 4
+starboardCount: 3 4
+starboardCount: 4 3
+starboardCount: 5 3
+starboardCount: 6 3
+starboardCount: 7 3

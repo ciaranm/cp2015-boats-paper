@@ -15,7 +15,7 @@
 \usepackage{colortbl}
 \usepackage{booktabs}
 \usepackage{framed}
-\usepackage{coffee2}
+%\usepackage{coffee2}
 \usepackage{tikz}
 
 \usepackage{color}
@@ -80,25 +80,20 @@
 \maketitle
 
 \begin{abstract} 
-\todo{The quick brown duck jumped over the lazy pig. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog. The quick brown duck jumped over the lazy dog.}
+\todo{We encourage industrial and academic users of constraint technology to submit papers on completed or on-going practical projects. Papers comparing constraint technology to other optimization techniques (MIP, local search, SAT, etc.) on a realistic application with a sound experimental evaluation are also encouraged. Papers which clearly define users' benefits, describe the required effort to build the application and the time frame in which it was delivered, will match the acceptance criteria most closely. The novelty of the application domain, while potentially a plus, is not the only deciding acceptance criterion. Application papers will be reviewed by a program committee with significant experience in the use of CP in applications. The writing of the paper should be guided by providing answers to four main questions: Problem being solved? Why CP? How CP? Added value of CP? Formatting, length, and dates for submissions are the same as for the technical track.}
 \end{abstract}
 
-\section{Introduction}\coffee{1}
-Round robin competition scehdules represent a rich area for applications of constraint programming. This work describes a particular round robin competition format that arises from sailing, known as match racing. In particular, the competitors, known formally as {\em skippers} compete against each other in a series of matches taking place in rounds (known as {\em flights}). For a match, each skipper is placed in a boat.
+\section{Introduction}
+%\coffee{1}
+This work describes a round robin competition format that arises from sailing, known as match racing. Competitors, i.e. {\em skippers}, compete against each other in a series of matches taking place in rounds, known as {\em flights}.  A match is composed of two skippers, with each skipper in a boat on his own. Skippers in a match set off together, one on the port side, the other starboard, and first home wins that match. ISAF World Sailing rules dictate what makes a legal schedule and what criteria to optimise. This is a rich set of rules, 13 in all, and as far as we know, all published schedules have been produced by hand. This is a daunting task. A close inspection of these schedules reveals that most are illegal, violating many of the match race rules, and some that are legal are far from optimal.
 
-The guidelines for running match racing events~\cite{isaf} places a number of criteria on how the competiting skippers are scheduled into flights and matches, known as pairing lists. Several of these criteria are applicable when the number of skippers exceeds the number of available boats, in which case skippers have to change in and out of boats, and are allowed time in the schedule to check and fine-tune the boat they change into.
-
-While the number of boats and skippers involved is typically not numerous (e.g.\ upto 10 of each), the creations of valid schedules satisfying all constraints is unachievable without automation. Hence, this paper documents our efforts in automating the creation of valid schedules. This is achieved \todo{through ... symmettry breaking ...,  etc. We believe that the methods detailed here are applicable to other problems (example?), and are of interest to the community. }
-
-\todo{Therefore the contributions of this paper are hunner'-fold: TODO}
-
-The remainder of this paper is structured as follows: Section~\ref{sec:definition} provides an overview of the criteria outlined for creating match racing pairing lists; Section~\ref{sec:samples} discusses several sample schedules, while concluding remarks follow in Section~\ref{sec:conclusions}.
+This paper describes the scheduling problem. We present a constraint programming solution to this problem, and document how this model was constructed incrementally. We believe this illustrates how adaptable constraint programming is, i.e. given a fairly robust model this can be incrementally developed to address all of the required criteria. Our schedules are then constructed in a sequence of stages, not dissimilar to the hybrid and decomposition based approaches in \cite{lombardi2012}. Some ISAF published schedules are presented along with some of our own, some of these being new. Having a constraint program for this problem has a number of unexpected advantages, in particular, we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program can be used help design the next set of umpire's rules.
 
 \section{Problem Definition: Round Robin Pairing Lists}\label{sec:definition}
+The guidelines for running match racing events~\cite{isaf} places a number of criteria on how the competing skippers are scheduled into flights and matches, known as pairing lists. Several of these criteria are applicable when the number of skippers exceeds the number of available boats, in which case skippers have to change in and out of boats, and are allowed time in the schedule to check and fine-tune the boat they change into. Typically, matches set off at 5 minute intervals with each match taking about 20 minutes. Therefore, if we have 10 skippers and 10 boats we have 45 matches. This results in 9 flights each of 5 matches.  Each flight takes about 50 minutes, consequently eight or nine flights a day is a reasonable achievement for most umpires. Consequently, the number of boats and skippers involved is typically small.
 
-
-In the match racing format of sailing events, the criteria for generated match racing schedules (pairing lists) are given in ISAF ``International Umpires' and Match Racing Manual'' \cite{isaf}, section
-M.2 Recommended Criteria for Round Robin Pairing Lists. We detail these criteria below.
+The criteria for generated match racing schedules (pairing lists) are given in ISAF ``International Umpires' and Match Racing Manual'' \cite{isaf}, section
+M.2 Recommended Criteria for Round Robin Pairing Lists, and are detailed below.
 
 \begin{framed}
 \begin{enumerate}
@@ -132,15 +127,15 @@ Note that criteria 10, 11 and 12 only apply when there are fewer boats than
 skippers.
 \end{framed}
 
-Firstly, we note that we have rephrased criteria 2 \& 3 (denoted *) to clarify an error in \cite{isaf}. We further outline the key aspects of the criteria, which motivate and permit understanding of our proposal solution.
+We have rephrased criteria 2 \& 3 (denoted *) to clarify an error in \cite{isaf}. Note that the order of matches within a flight is significant and is constrained, as is the order of flights within a schedule and the position of skippers within a match. This permits fair schedules that provide the opportunity for skippers to change boats, take fair advantage of wind direction, etc. 
 
-In particular, the order of matches within a flight are constrained, as well as the order of flights, to permit fair schedules that provide the opportunity for skippers to change boats, etc.
+Criteria 12 defines what is meant by a boat change: if in flight $i$ this skipper is not in a match (i.e. it is a bye for this skipper) but is in a match in flight $i+1$ then he has to get into a boat, rearrange all his kit and set the boat as he likes it prior to casting off, and this is a boat change.
 
 Next, we note that skippers can be ranked prior to an event -- based on their performance in previous events~\footnote{\url{http://www.sailing.org/rankings/match/}} -- which is used to seed the skippers. The ordering of skippers within a match signifies their starting position (port or starboard) -- as skippers allocated the starboard starting position gain a small competitive advantage in that match - criteria 8 accomplishes the seedings.
 
-Finally, it can be observed that criteria 10 is ambigious: - this could be interpreted on an schedule basis: i.e.\ to minimise the overall number of changes in the entire pairing list schedule; or alterantively as well as a fair, but minimal number of changes across all skippers. In our work, we take the latter viewpoint. 
+Criteria 10 is ambiguous: - this could be interpreted on a schedule basis: i.e.\ to minimise the overall number of changes in the entire pairing list schedule; or alternatively as well as a fair, but minimal number of changes across all skippers. In our work, we take the latter viewpoint.
 
-In the following, we detail the constraint models (Section~\ref{sec:models}), while some example schedules are presented in Section~\ref{sec:samples}.
+There are some conflicts inherent in the rules. Take criteria 4 and 11, assume we have 4 boats, and in flight $i$ the last match is the pair of skippers ($x,y$). Criteria 11 dictates that skippers $x$ and $y$ must appear in the next flight, $i+1$, and criteria 4 that neither can be first in the next flight. This forces skippers $x$ and $y$ to compete in flight $i+1$ as the last match, violating criteria 1. Therefore, although not explicitly stated, there are no legal schedules with less than 6 boats.
 
 \section{The Constraint Models}\label{sec:models}
 
@@ -184,7 +179,7 @@ available to download\footnote{?? give us a link to the models}.
 
 \subsection{Stage 1: Minimising Boat Changes}
 
-\paragraph{Modelling skippers:} The first thing we model, in the first half of
+\paragraph{Modeling skippers:} The first thing we model, in the first half of
 Figure~\ref{model:stage1}, is a skipper. Each skipper $\sigma$ has a temporal
 view of his schedule in the array of constrained integer variables
 $\timeSlot[0]$ to $\timeSlot[{t-1}]$, and a state view in the array of
@@ -603,12 +598,83 @@ schedule presented here is new, not appearing in the example schedules provided 
 right is the actual oriented schedule. Below that is the dfa to satisfy
 criteria 5. On the left is the zero/one variables, a row representing a
 skippers sequence of competitors. An edge between variables corresponds to a
-matched pair, that must take different values. Bottom right is a sketch by one
-of the authors.}
+matched pair, that must take different values. Bottom right is a sketch by third author.}
 \label{oriented}
 \end{figure}
 
 \section{Sample Schedules}\label{sec:samples}
+\begin{center}
+\begin{figure}[h]
+\begin{minipage}[t]{0.3\textwidth}
+\hspace{0.2cm}
+\begin{scriptsize}
+\begin{tabular}{cccc}
+        \toprule
+        Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+        0 & (2,7) & (3,0) & (5,4) \\ 
+        1 & (0,2)  & (4,3) & (7,5) \\
+        2 & (0,4) & (7,6) & (5,3) \\
+        3 & (4,6) & (5,0) & (3,1) \\
+        4 & (6,5) & (3,2) & (1,4) \\
+        5 & (6,3) & (4,7) & (2,1) \\
+        6 & (7,3) & (1,6) & (4,2) \\
+       7 & (7,1)  & (2,5) & (6,0) \\
+       8 & (5,1)  & (0,7) & (6,2) \\
+       9 & (1,0)  & & \\ \bottomrule
+          & & & \\
+          & & & \\
+    \end{tabular}
+\end{scriptsize}
+\label{tab3a}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+\hspace{0.2cm}
+\begin{scriptsize}
+\begin{tabular}{cccc}
+        \toprule
+        Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+        0 & (0,7) & (3,2) & (5,4) \\ 
+        1 & (0,2) & (7,4) & (5,3) \\
+        2 & (4,0) & (7,3) & (2,5) \\
+        3 & (3,0) & (2,4) & (6,5) \\
+        4 & (4,3) & (5,1) & (8,6) \\
+        5 & (3,1) & (6,2) & (4,8) \\
+        6 & (6,3) & (1,4) & (8,2) \\
+        7 & (4,6) & (2,7) & (1,8) \\
+        8 & (7,6) & (0,8) & (2,1) \\
+        9 & (8,7) & (5,0) & (6,1) \\
+        10 & (8,5) & (1,7) & (0,6) \\
+        11 & (7,5) & (3,8) & (1,0) \\ \bottomrule
+    \end{tabular}
+\end{scriptsize}
+\label{tab3a}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+\begin{scriptsize}
+\begin{tabular}{ccccc}
+        \toprule
+        Flight & \multicolumn{4}{c}{Matches} \\ \midrule
+        0 & (0,6) & (3,2) & (5,4) & (1,7) \\
+        1 & (2,0) & (6,3) & (4,1) & (8,7) \\
+        2 & (6,4) & (0,5) & (7,2) & (3,8) \\
+        3 & (4,7) & (1,8) & (0,3) & (5,2) \\
+        4 & (3,1) & (7,5) & (8,0) & (2,6) \\
+        5 & (3,7) & (4,8) & (2,1) & (6,5) \\
+        6 & (8,2) & (1,6) & (5,3) & (0,4) \\
+        7 & (5,1) & (7,0) & (6,8) & (4,3) \\
+        8 & (8,5) & (2,4) & (7,6) & (1,0) \\ \bottomrule
+        & & & & \\
+        & & & & \\
+        & & & & \\
+    \end{tabular} 
+\end{scriptsize}
+\end{minipage}
+\caption{Three schedules. First is 8 skippers with 6 boats (legal), then 9 skippers with 6 boats (new), finally 9 skippers with 8 boats (new).}
+\label{sr10}
+\end{figure}
+\end{center}
 
 \subsection{Discussion}
 
@@ -617,7 +683,7 @@ of the authors.}
 
 \section*{Acknowledgments}
 We would like to thank our parents, God, and all his angels.
-\coffee{2}
+%\coffee{2}
 
 \bibliographystyle{plain}
 \bibliography{bib}
