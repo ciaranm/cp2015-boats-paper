@@ -80,7 +80,7 @@
 \maketitle
 
 \begin{abstract} 
-\todo{We encourage industrial and academic users of constraint technology to submit papers on completed or on-going practical projects. Papers comparing constraint technology to other optimization techniques (MIP, local search, SAT, etc.) on a realistic application with a sound experimental evaluation are also encouraged. Papers which clearly define users' benefits, describe the required effort to build the application and the time frame in which it was delivered, will match the acceptance criteria most closely. The novelty of the application domain, while potentially a plus, is not the only deciding acceptance criterion. Application papers will be reviewed by a program committee with significant experience in the use of CP in applications. The writing of the paper should be guided by providing answers to four main questions: Problem being solved? Why CP? How CP? Added value of CP? Formatting, length, and dates for submissions are the same as for the technical track.}
+We present a constraint programming solution to the problem of generating round-robin schedules for dinghy sailing match races. Our schedules satisfy the widely used ISAF World Sailing pairing lists match race criteria. We show that some published ISAF schedules are in fact illegal, and present corresponding legal instances and schedules that have not previously been published. Our schedules can be downloaded as blanks, then populated with actual competitors and used in ISAF competitions. 
 \end{abstract}
 
 \section{Introduction}
@@ -776,6 +776,16 @@ Flight & \multicolumn{3}{c}{Matches} \\ \midrule
 \end{figure}
 \end{center}
 
+\begin{center}
+\begin{figure}[tb]
+\hspace{-1cm}
+\includegraphics[height=12cm,width=17.5cm]{dinghy.jpg}
+\vspace{-30mm}
+\caption{Scene from an imaginary dinghy race.}
+\label{dinghy}
+\end{figure}
+\end{center}
+
 \subsection{Discussion}
 It was anticipated that this problem would be easy to model. This naivety was due to "round robin", leading us to believe that we could use some of the models proposed in \cite{trick2002}, \cite{trick2008} and \cite{henz2004}. This naivety slowly dissolved as we addressed more and more of the ISAF criteria. A number of models we produced were scrapped due to misunderstanding about the actual problem, i.e. a communication problem between the authors. Eventually this was resolved by presenting the majority of the criteria as a deterministic finite automaton. This became our Rosetta Stone, with the surprising benefit that it not only improved the teams communications, it was also a constraint!
 
@@ -791,7 +801,6 @@ We have only reported a handful of our schedules, however there are missing sche
 We have produce new and better match race schedules. These schedules can be used by anyone that competes under ISAF World Sailing rules. Our schedules can be downloaded as blank schedules and then populated with the names of the actual competing skippers. 
 
 So, why did we use constraint programming? The answer is obvious:  we are constraint programmers, or to borrow Mark Twain's words "To a man with a hammer, everything looks like a nail." But actually, constraint programming has been a good way to go. From an engineering perspective, it has allowed us to prototype solutions quickly and to build solutions incrementally. There is also an advantage that we might exploit in the future: we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program might be used to design the next set of umpire's rules.
-
 
 
 %\section*{Acknowledgments}
