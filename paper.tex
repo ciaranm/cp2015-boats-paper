@@ -658,8 +658,10 @@ We present three pairs of schedules. The first pair is for 8 skippers and 6 boat
 
 \noindent
 \subsection{8 skippers and 6 boats}
-We first analyse the ISAF schedule (on the left). Criteria 4 (skippers in last match in a flight cannot be first in next flight) is violated on 3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criteria 5 (no more than two consecutive port or starboard assignments) are violated for skippers 6 and 7. Criteria 6 (imbalance) is violated for skippers 6 and 8. Criteria 12  (new boats do not sail first) is violated in flight 9 for skipper 5. Finally, the schedule has 8 boat changes. Our schedule, on the right, resepects all criteria and has 6 boat changes and a maximum imbalance of 1.
+We first analyse the ISAF schedule, Table \ref{08-06} on the left. Criteria 4 (skippers in last match in a flight cannot be first in next flight) is violated on 3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criteria 5 (no more than two consecutive port or starboard assignments) is violated for skipper 6 (flights 1 to 3) and 7 (flights 7 to 9). Criteria 6 (imbalance) is violated for skippers 6 and 8. Criteria 12  (new boats do not sail first) is violated in flight 9 for skipper 5. Finally, the schedule has 8 boat changes. Our schedule, Table \ref{08-06} on the right, respects all criteria and has 6 boat changes and a maximum imbalance of 1.
 
+\subsection{9 skippers}
+Two new schedules are presented in Table \ref{09}, on the left for 6 boats and on the right 8 boats. Neither of these schedules appear in the ISAF Umpires' Manual. Both schedules respect all criteria. For 6 boats there are 8 boat changes (no skipper making more than 1 boat change) and a maximum imbalance of 2. For 8 boats there are again 8 boat changes, no skipper with more than 1 boat change, and perfect balance (each skipper 4 times on starboard side and 4 on port side).
 
 \begin{center}
 \begin{figure}[h]
@@ -712,6 +714,9 @@ We first analyse the ISAF schedule (on the left). Criteria 4 (skippers in last m
 \label{09}
 \end{figure}
 \end{center}
+
+\subsection{10 skippers and 6 boats}
+Table \ref{10-06} shows the ISAF schedule on the right for 10 skippers and 6 boats and on the right, our schedule.  The ISAF schedule violates criteria 5 (no more than 2 consequitive port or starboard assignments) 10 times (twice for skipper 0, 1 and 6 and once for skippers 3, 7, 8 and 9).  Criteria 12 (new boats do not sail first) is violated 7 times (in flight 3 for skippers 6 and 2, flight 5 for skipper 8, flight 6 for skipper 7, flight 8 for skipper 1, flight 9 for skipper 4 and flight 12 for skipper 4 again). There are 22 boat changes, with the minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Table \ref{10-06} satisfies all criteria, has 12 boat changes with the minimum changes for a skipper being 0 and the maximum 2, and a maximum imbalance of 1.
 
 \begin{center}
 \begin{figure}[h]
@@ -772,14 +777,25 @@ Flight & \multicolumn{3}{c}{Matches} \\ \midrule
 \end{center}
 
 \subsection{Discussion}
-Having a constraint program for this problem has a number of unexpected advantages, in particular, we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program can be used help design the next set of umpire's rules.
+It was anticipated that this problem would be easy to model. This naivety was due to "round robin", leading us to believe that we could use some of the models proposed in \cite{trick2002}, \cite{trick2008} and \cite{henz2004}. This naivety slowly dissolved as we addressed more and more of the ISAF criteria. A number of models we produced were scrapped due to misunderstanding about the actual problem, i.e. a communication problem between the authors. Eventually this was resolved by presenting the majority of the criteria as a deterministic finite automaton. This became our Rosetta Stone, with the surprising benefit that it not only improved the teams communications, it was also a constraint!
+
+The staged approach was taken cautiously. We expected that isolating the orientation of schedules as a post-process might leave us with a hard or insoluble problem. So far, every schedule we have produced has been oriented with very little search, typically taking less than a second.
+
+We used the choco constraint programming toolkit and one of our goals was to use only toolkit constraints, i.e. we wanted to see how far we could go without implementing our own specialised constraints. We are pleased to say that we did not have to do anything out of the box, although we did feel that we had used just about every constraint there was.
+
+There are many redundant variables in our model. One of our first valid models was essentially that shown in Figure \ref{skipper5}, and did not use $modMatch$ and $match$ variables. Performance was hopeless, struggling to produce a 7 skipper 6 boat schedule in days. The $modMatch$ and $match$ variables were added. This improved domain filtering, and a flattened $match$ array was used as decision variables. That is, the decisions where "when do we schedule this match?".  At this point we had not yet produced a 9 skipper 6 boat schedule and we suspected that the combined criteria might exclude such a schedule. A non-constraint model was developed by the fourth author, primarily to prove that there was no schedule for 9 skippers with 6 boats. This program used a backtracking search with decision variables being positions within flights, i.e. time slots being assigned matches. Prior to search, symmetry breaking was performed, and at the top of search the matches in the first flight were set. A solution was found in seconds! With this experience we added in the $time$ variables, channeled these into the existing model and used these as decision variables, i.e. the question now was "what match will we do now?". We also anchored the matches in the first flight. With these changes we began to produce schedules in acceptable time. The model was then built upon, incrementally adding criteria. This took a surprisingly short amount of time, sometimes minutes of coding to add in a new feature. The model was then enhanced so that it would address optimisation rather than just satisfaction, again a trivial programming task.
+
+We have only reported a handful of our schedules, however there are missing schedules. Examples of these missing schedules are 10 skippers and 8 boats, 11 skippers with less than 10 boats, 12 skippers and 8 boats, 13 skippers and 8 boats and 14 skippers with less than 10 boats. None of these schedules have been published by the ISAF, although we expect that they can be produced by selectively violating some of constraints. We have also not yet encoded criteria 7, addressing the situation of 10 or more boats. To do this we will have to modify the DFA constraint used in the first two stages. 
 
 \section{Conclusion}\label{sec:conclusions}
+We have produce new and better match race schedules. These schedules can be used by anyone that competes under ISAF World Sailing rules. Our schedules can be downloaded as blank schedules and then populated with the names of the actual competing skippers. 
+
+So, why did we use constraint programming? The answer is obvious:  we are constraint programmers, or to borrow Mark Twain's words "To a man with a hammer, everything looks like a nail." But actually, constraint programming has been a good way to go. From an engineering perspective, it has allowed us to prototype solutions quickly and to build solutions incrementally. There is also an advantage that we might exploit in the future: we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program might be used to design the next set of umpire's rules.
 
 
 
-\section*{Acknowledgments}
-We would like to thank our parents, God, and all his angels.
+%\section*{Acknowledgments}
+%We would like to thank our parents, God, and all his angels.
 %\coffee{2}
 
 \bibliographystyle{plain}
