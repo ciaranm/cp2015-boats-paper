@@ -85,9 +85,12 @@
 
 \section{Introduction}
 %\coffee{1}
-This work describes a round robin competition format that arises from sailing, known as match racing. Competitors, i.e. {\em skippers}, compete against each other in a series of matches taking place in rounds, known as {\em flights}.  A match is composed of two skippers, with each skipper in a boat on his own. Skippers in a match set off together, one on the port side, the other starboard, and first home wins that match. ISAF World Sailing rules dictate what makes a legal schedule and what criteria to optimise. This is a rich set of rules, 13 in all, and as far as we know, all published schedules have been produced by hand. This is a daunting task. A close inspection of these schedules reveals that most are illegal, violating many of the match race rules, and some that are legal are far from optimal.
+This work describes a round robin competition format that arises from sailing, known as match racing. Competitors, i.e. {\em skippers}, compete against each other in a series of matches taking place in rounds, known as {\em flights}.  A match is composed of two skippers, with each skipper in a boat on his own. Skippers in a match set off together, one on the port side, the other starboard, and first home wins that match. ISAF World Sailing rules dictate what makes a legal schedule and what criteria to optimise. This is a rich set of rules, 13 in all, and as far as we know, all published schedules have been produced by hand. This is a daunting task. A close inspection of these schedules reveals that most are illegal, violating many of the match race rules, many schedules are missing and some that are legal are far from optimal.
 
-This paper describes the scheduling problem. We present a constraint programming solution to this problem, and document how this model was constructed incrementally. We believe this illustrates how adaptable constraint programming is, i.e. given a fairly robust model this can be incrementally developed to address all of the required criteria. Our schedules are then constructed in a sequence of stages, not dissimilar to the hybrid and decomposition based approaches in \cite{lombardi2012}. Some ISAF published schedules are presented along with some of our own, some of these being new. Having a constraint program for this problem has a number of unexpected advantages, in particular, we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program can be used help design the next set of umpire's rules.
+This paper describes the scheduling problem. We present a constraint programming solution and document how this model was constructed incrementally. We believe this illustrates how adaptable constraint programming is, i.e. given a fairly robust model this can be incrementally developed to address all of the required criteria. Our schedules are then constructed in a sequence of stages, not dissimilar to the hybrid and decomposition based approaches in \cite{lombardi2012}. Some ISAF published schedules are presented along with some of our own, some of these being new.  These schedules are esentially blank forms, made available to umpires and competition managers. These forms are then filled in with names of actual competitors, i.e. these schedules are reusable.
+
+The paper is organised as follows: we present the 13 match racing rules and then the constraint models and four stages of schedule construction, schedules are then presented, there is then a discuss and we conclude.
+
 
 \section{Problem Definition: Round Robin Pairing Lists}\label{sec:definition}
 The guidelines for running match racing events~\cite{isaf} places a number of criteria on how the competing skippers are scheduled into flights and matches, known as pairing lists. Several of these criteria are applicable when the number of skippers exceeds the number of available boats, in which case skippers have to change in and out of boats, and are allowed time in the schedule to check and fine-tune the boat they change into. Typically, matches set off at 5 minute intervals with each match taking about 20 minutes. Therefore, if we have 10 skippers and 10 boats we have 45 matches. This results in 9 flights each of 5 matches.  Each flight takes about 50 minutes, consequently eight or nine flights a day is a reasonable achievement for most umpires. Consequently, the number of boats and skippers involved is typically small.
@@ -603,11 +606,35 @@ matched pair, that must take different values. Bottom right is a sketch by third
 \end{figure}
 
 \section{Sample Schedules}\label{sec:samples}
+
 \begin{center}
 \begin{figure}[h]
-\begin{minipage}[t]{0.3\textwidth}
-\hspace{0.2cm}
-\begin{scriptsize}
+\begin{minipage}[t]{0.5\textwidth}
+\hspace{0.6cm}
+%\begin{scriptsize}
+\begin{tabular}{cccc}
+        \toprule
+        Flight & \multicolumn{3}{c}{Matches} \\ \midrule
+        0 & (5,2) & (4,3) & (1,6) \\ 
+        1 & (4,2)  & (6,5) & (3,1) \\
+        2 & (6,4) & (2,1) & (3,5) \\
+        3 & (6,2) & (5,0) & (1,7) \\
+        4 & (5,1) & (0,6) & (2,7) \\
+        5 & (7,5) & (2,0) & (6,3) \\
+        6 & (0,7) & (4,1) & (3,2) \\
+       7 & (7,4)  & (0,3) &  \\
+       8 & (4,0)  & (7,3) &  \\
+       9 & (5,4)  & (7,6) & (1,0) \\ \bottomrule
+          & & & \\
+          & & & \\
+    \end{tabular}
+%\end{scriptsize}
+\label{08-06a}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\hspace{0.6cm}
+%\begin{scriptsize}
 \begin{tabular}{cccc}
         \toprule
         Flight & \multicolumn{3}{c}{Matches} \\ \midrule
@@ -624,10 +651,17 @@ matched pair, that must take different values. Bottom right is a sketch by third
           & & & \\
           & & & \\
     \end{tabular}
-\end{scriptsize}
-\label{tab3a}
+%\end{scriptsize}
+\label{08-06b}
 \end{minipage}
-\hfill
+\caption{Schedules for 8 skippers and 6 boats. On the left is the published ISAF schedule, and this is illegal. On the right is our schedule, respecting all ISAF criteria..}
+\label{08-06}
+\end{figure}
+\end{center}
+
+
+\begin{center}
+\begin{figure}[h]
 \begin{minipage}[t]{0.3\textwidth}
 \hspace{0.2cm}
 \begin{scriptsize}
@@ -650,7 +684,7 @@ matched pair, that must take different values. Bottom right is a sketch by third
 \end{scriptsize}
 \label{tab3a}
 \end{minipage}
-\hfill
+%\hfill
 \begin{minipage}[t]{0.3\textwidth}
 \begin{scriptsize}
 \begin{tabular}{ccccc}
@@ -677,8 +711,10 @@ matched pair, that must take different values. Bottom right is a sketch by third
 \end{center}
 
 \subsection{Discussion}
+Having a constraint program for this problem has a number of unexpected advantages, in particular, we can now investigate the effect different criteria have on our ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the constraint program can be used help design the next set of umpire's rules.
 
 \section{Conclusion}\label{sec:conclusions}
+
 
 
 \section*{Acknowledgments}
