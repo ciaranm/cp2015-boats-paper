@@ -146,16 +146,16 @@ Lists, and are detailed below.
 \item Skippers in new boats do not sail in the first match of the next flight.
 \item Skippers have a reasonable sequence of matches and blanks.
 \end{enumerate}
-Note that criteria 10, 11 and 12 only apply when there are fewer boats than skippers; 11 and 12
-override 6 when changes are required.
+Note that criteria~10, 11 and~12 only apply when there are fewer boats than skippers; 11 and~12
+override~6 when changes are required.
 \end{framed}
 
-We have rephrased criteria 2 \& 3 (denoted *) to clarify an error in \cite{isaf}. Note that the
+We have rephrased criteria~2 and~3 (denoted *) to clarify an error in \cite{isaf}. Note that the
 order of matches within a flight is significant and is constrained, as is the order of flights
 within a schedule and the position of skippers within a match. This permits fair schedules that
 provide the sufficient changeover time for skippers changing boats, etc.
 
-Criteria 12 defines what is meant by a boat change: if in flight $i$ this skipper is not in a match
+Criterion~12 defines what is meant by a boat change: if in flight $i$ this skipper is not in a match
 (i.e. it is a bye for this skipper) but is in a match in flight $i+1$ then he has to get into a
 boat, rearrange all his kit and set the boat to his preference before racing commences, and this is
 a boat change.
@@ -164,28 +164,28 @@ Next, we note that skippers can be ranked prior to an event, based on their perf
 previous events\footnote{\url{http://www.sailing.org/rankings/match/}}, which is used to seed the
 skippers. The ordering of skippers within a match signifies their starting position (port or
 starboard), as skippers allocated the starboard starting position gain a small competitive
-advantage in that match---criteria 8 accomplishes the seedings.
+advantage in that match---criterion~8 accomplishes the seedings.
 
-Criteria 10 is ambiguous: this could be interpreted on a schedule basis: i.e.\ to minimise the
+Criterion~10 is ambiguous: this could be interpreted on a schedule basis: i.e.\ to minimise the
 overall number of changes in the entire pairing list schedule; or alternatively as well as a fair,
 but minimal number of changes across all skippers. In our work, we take the latter viewpoint.
 
-There are some conflicts inherent in the rules. Take criteria 4 and 11, assume we have 4 boats, and
-in flight $i$ the last match is the pair of skippers ($x,y$). Criteria 11 dictates that skippers $x$
-and $y$ must appear in the next flight, $i+1$, and criteria 4 that neither can be first in the next
+There are some conflicts inherent in the rules. Take criteria~4 and~11, assume we have 4 boats, and
+in flight $i$ the last match is the pair of skippers ($x,y$). Criterion~11 dictates that skippers $x$
+and $y$ must appear in the next flight, $i+1$, and criterion~4 that neither can be first in the next
 flight. This forces skippers $x$ and $y$ to compete in flight $i+1$ as the last match, violating
-criteria 1. Therefore, although not explicitly stated, there are no legal schedules with less than 6
+criterion~1. Therefore, although not explicitly stated, there are no legal schedules with less than 6
 boats.
 
 \section{The Constraint Models}\label{sec:models}
 
 The schedules are produced in four stages. The first stage produces a schedule that respects
-criteria 1, 4, 11 and 12, and minimises criteria 10 (boat changes). The second stage constructs a
-schedule that respects criteria 1, 4, 11, 12 (again), has criteria 10 as a hard constraint generated
-from first stage, and minimises criteria 6 (balance). This results in a schedule that attempts to
-minimise boat changes \emph{and} balance. The third stage satisfies criteria 9, and is a simple
+criteria~1, 4, 11 and~12, and minimises criteria~10 (boat changes). The second stage constructs a
+schedule that respects criteria~1, 4, 11, 12 (again), has criterion~10 as a hard constraint generated
+from first stage, and minimises criterion~6 (balance). This results in a schedule that attempts to
+minimise boat changes \emph{and} balance. The third stage satisfies criterion~9, and is a simple
 translation of the schedule produced in stage 2.  The final stage orients skippers within matches to
-address criteria 2, 3, 5 and 8.
+address criteria~2, 3, 5 and~8.
 
 We now describe the constraint models and processes used in each stage. In the text below we assume
 there are $n$ skippers and $b$ boats, with $m = b/2$ matches in a flight. In total there are $t =
@@ -286,10 +286,10 @@ We must then ensure that each skipper $\sigma$ is in a match with all other skip
 n-1\} \setminus \{\sigma\}$. This is \eqref{C2}, which may be implemented by imposing a global
 cardinality constraint \cite{globCard} on the array $\timeSlot$.
 
-\paragraph{State transitions:} The $\state$ variables are then used to impose match race criteria 4
-(if last in flight $i$ then not first in flight $i+1$), criteria 11 (if last in flight $i$ then not
-in a bye in flight $i+1$) and criteria 12 (if flight $i$ is a bye then flight $i$ is not first).
-These criteria are imposed by \eqref{C3}, which is a deterministic finite automata (DFA) constraint
+\paragraph{State transitions:} The $\state$ variables are then used to impose match race criterion~4
+(if last in flight $i$ then not first in flight $i+1$), criterion~11 (if last in flight $i$ then not
+in a bye in flight $i+1$) and criterion~12 (if flight $i$ is a bye then flight $i$ is not first).
+These criteria are imposed by \eqref{C3}, which is a deterministic finite automaton (DFA) constraint
 \cite{Pesant04}. The transitions for the DFA are shown pictorially in Figure~\ref{skipper5}: arcs
 represent a transition from one state to another. The DFA is encoded as a set of transition objects
 $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from state $q_{i}$ to state $q_{j}$
@@ -446,13 +446,13 @@ variables \eqref{V3}, and the constraint \eqref{C4}, and accumulated into $\tota
 
     \end{tikzpicture}
     \caption{A pictorial representation of a skipper (skipper 5) with multicoloured state and grey
-        timeslots. The schedule for skipper 5 is in bold and the deterministic finite automata for
-        criteria 4, 11 and 12 is drawn with state $\START$ in white, $\FIRST$ in blue, $\MID$ in
+        timeslots. The schedule for skipper 5 is in bold and the deterministic finite automaton for
+        criteria~4, 11 and~12 is drawn with state $\START$ in white, $\FIRST$ in blue, $\MID$ in
         yellow, $\LAST$ in green, $\BYE$ in pink and $\END$ in red.}\label{skipper5}
 \end{figure}
 
-\paragraph{Match perspective:} We are now in a position to model criteria 1 (each skipper sails
-against every other skipper) and optimisation criteria 10 (minimise boat changes).  In the second
+\paragraph{Match perspective:} We are now in a position to model criterion~1 (each skipper sails
+against every other skipper) and optimisation criterion~10 (minimise boat changes).  In the second
 half of Figure~\ref{model:stage1} we present a match perspective of the schedule, using a two
 dimensional array of variables $\match$ \eqref{V5}, where $\match[{i,j}]$ is the time slot that
 skippers $\sigma[{i}]$ and $\sigma[{j}]$ meet in a match. Only the half above the diagonal is
@@ -472,7 +472,7 @@ $\timeVar[{\tau}]$ is a pair $(i,j)$, stating that at time $\tau$ skippers $\sig
 $\sigma[{j}]$ are in a match. We channel between the match perspective and the temporal perspective
 using \eqref{C9}.
 
-\paragraph{Optimisation criteria:} Finally we have the optimisation criteria (criteria 10) to
+\paragraph{Optimisation criteria:} Finally we have the optimisation criterion (criterion~10) to
 minimise the number of boat changes. This is handled by \eqref{V8} and \eqref{C10}.
 
 \paragraph{Decision variables:} The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$,
@@ -502,7 +502,7 @@ signify channeling between parts of the model.}
 
 \subsection{Stage 2: Minimising Imbalances}
 
-Having produced a schedule that minimises boat changes, we then minimise criteria 6, imbalance, by
+Having produced a schedule that minimises boat changes, we then minimise criterion~6, imbalance, by
 extending the model as in Figure~\ref{model:stage2}.  Assuming the first stage produced a schedule
 with $\beta$ boat changes we post this as a hard constraint \eqref{C11} in stage 2. For each skipper
 $\sigma$ we introduce a zero/one variable $position[{i,j}]$ \eqref{V9} which is 1 if and only if
@@ -553,7 +553,7 @@ $\timeVar[{t-1}]$ and the same symmetry breaking is imposed at top of search.
 \subsection{Stage 3: Renaming Skippers}
 
 Stage 3 then takes as input the schedule produced in stage 2 and renames skippers in the last round
-of the last flight to be $(0,1)$, satisfying criteria 9. This is a simple linear process. The
+of the last flight to be $(0,1)$, satisfying criterion~9. This is a simple linear process. The
 schedule produced for 7 skippers and 6 boats is shown in Table~\ref{tab2}.
 
 \begin{SCtable}[1.8][tb]
@@ -579,17 +579,17 @@ schedule produced for 7 skippers and 6 boats is shown in Table~\ref{tab2}.
 \subsection{Stage 4: Orienting Matches}
 
 The final stage, stage 4, orients skippers within matches, such that they are either port (red) or
-starboard (green). This is done to satisfy criteria 2 and 3, 5 and 8. A sketch of the constraint
+starboard (green). This is done to satisfy criteria~2 and~3, 5 and~8. A sketch of the constraint
 model is given with a supporting diagram, Figure~\ref{oriented}.  A sequence of zero/one constrained
 integer variables, of length $n-1$, is produced for each skipper. These correspond to the sequence
 of skippers they meet in matches. For example, taking the schedule in Table~\ref{tab2}, skipper
 $\sigma[{2}]$ meets skippers in order: 3,0,1,4,5,6, and skipper $\sigma[{5}]$ in the order
 4,6,0,1,3,2.  Therefore, skipper $\sigma[{2}]$'s 4$^{th}$ variable must take a different value from
-$\sigma[{5}]$ 5$^{th}$ variable. There are summation constraints on each skipper to enforce criteria
-2 and 3 (equal number of port and starboard matches). Criteria 8 is enforced by posting constraints
-such that in a match ($\sigma[{i}],\sigma[{j}]$) where $\abs*{i - j} = 1$, the higher indexed
-skipper (lower ranked) is on the port side. A DFA constraint is posted for criteria 5 (restricting
-sequences of port and starboard assignments).
+$\sigma[{5}]$ 5$^{th}$ variable. There are summation constraints on each skipper to enforce
+criteria~2 and~3 (equal number of port and starboard matches). Criterion~8 is enforced by posting
+constraints such that in a match ($\sigma[{i}],\sigma[{j}]$) where $\abs*{i - j} = 1$, the higher
+indexed skipper (lower ranked) is on the port side. A DFA constraint is posted for criterion~5
+(restricting sequences of port and starboard assignments).
 
 In Figure~\ref{oriented}, port is red and starboard green. The sequence of zero/one variables for
 each skipper is shown on the left. Bottom right is the DFA, and top right is the final schedule
@@ -601,7 +601,7 @@ schedule presented here is new, not appearing in the example schedules provided 
 \centering
 \includegraphics[height=10.2cm,width=13.2cm]{oriented.pdf}
 \caption{A pictorial representation of the orientation process, stage 4. Top right is the actual
-oriented schedule. Below that is the dfa to satisfy criteria 5. On the left is the zero/one
+oriented schedule. Below that is the DFA to satisfy criterion~5. On the left is the zero/one
 variables, a row representing a skippers sequence of competitors. An edge between variables
 corresponds to a matched pair, that must take different values. Bottom right is a sketch by third
 author.}\label{oriented}
@@ -662,10 +662,10 @@ and on the right is our schedule.}
 \end{center}
 
 \paragraph{8 skippers and 6 boats:} We first analyse the ISAF schedule, Table~\ref{08-06} on the
-left. Criteria 4 (skippers in last match in a flight cannot be first in next flight) is violated on
-3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criteria 5 (no
+left. Criterion~4 (skippers in last match in a flight cannot be first in next flight) is violated on
+3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criterion~5 (no
 more than two consecutive port or starboard assignments) is violated for skipper 6 (flights 1 to 3)
-and 7 (flights 7 to 9). Criteria 6 (imbalance) is violated for skippers 6 and 8. Criteria 12  (new
+and 7 (flights 7 to 9). Criterion~6 (imbalance) is violated for skippers 6 and 8. Criterion~12  (new
 boats do not sail first) is violated in flight 9 for skipper 5. Finally, the schedule has 8 boat
 changes. Our schedule, Table~\ref{08-06} on the right, respects all criteria and has 6 boat changes
 and a maximum imbalance of 1.
@@ -727,9 +727,9 @@ port side).
 \end{center}
 
 \paragraph{10 skippers and 6 boats:} Table \ref{10-06} shows the ISAF schedule on the right for 10
-skippers and 6 boats and on the right, our schedule.  The ISAF schedule violates criteria 5 (no more
+skippers and 6 boats and on the right, our schedule.  The ISAF schedule violates criterion~5 (no more
 than 2 consecutive port or starboard assignments) 10 times (twice for skipper 0, 1 and 6 and once
-for skippers 3, 7, 8 and 9).  Criteria 12 (new boats do not sail first) is violated 7 times (in
+for skippers 3, 7, 8 and 9).  Criterion~12 (new boats do not sail first) is violated 7 times (in
 flight 3 for skippers 6 and 2, flight 5 for skipper 8, flight 6 for skipper 7, flight 8 for skipper
 1, flight 9 for skipper 4 and flight 12 for skipper 4 again). There are 22 boat changes, with the
 minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Table \ref{10-06}
@@ -843,7 +843,7 @@ We have only reported a handful of our schedules, however there are missing sche
 these missing schedules are 10 skippers and 8 boats, 11 skippers with less than 10 boats, 12
 skippers and 8 boats, 13 skippers and 8 boats and 14 skippers with less than 10 boats. None of these
 schedules have been published by the ISAF, although we expect that they can be produced by
-selectively violating some of constraints. We have also not yet encoded criteria 7, addressing the
+selectively violating some of constraints. We have also not yet encoded criterion~7, addressing the
 situation of 10 or more boats. To do this we will have to modify the DFA constraint used in the
 first two stages.
 
