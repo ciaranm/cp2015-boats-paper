@@ -147,7 +147,7 @@ Lists, and are detailed below.
 \item Skippers have a reasonable sequence of matches and blanks.
 \end{enumerate}
 Note that criteria~10, 11 and~12 only apply when there are fewer boats than skippers; 11 and~12
-override~6 when changes are required.
+override~6 when changes are required, and~13 applies when there are more boats than skippers.
 \end{framed}
 
 We have rephrased criteria~2 and~3 (denoted *) to clarify an error in \cite{isaf}. Note that the
@@ -155,10 +155,9 @@ order of matches within a flight is significant and is constrained, as is the or
 within a schedule and the position of skippers within a match. This permits fair schedules that
 provide the sufficient changeover time for skippers changing boats, etc.
 
-Criterion~12 defines what is meant by a boat change: if in flight $i$ this skipper is not in a match
-(i.e. it is a bye for this skipper) but is in a match in flight $i+1$ then he has to get into a
-boat, rearrange all his kit and set the boat to his preference before racing commences, and this is
-a boat change.
+Criterion~12 discusses boat changes: if in flight $i$ this skipper is not in a match (i.e. it is a
+bye for this skipper) but is in a match in flight $i+1$ then he has to get into a boat, rearrange
+all his kit and set the boat to his preference before racing commences, and this is a boat change.
 
 Next, we note that skippers can be ranked prior to an event, based on their performance in
 previous events\footnote{\url{http://www.sailing.org/rankings/match/}}, which is used to seed the
@@ -174,12 +173,12 @@ There are some conflicts inherent in the rules. Take criteria~4 and~11, assume w
 in flight $i$ the last match is the pair of skippers ($x,y$). Criterion~11 dictates that skippers $x$
 and $y$ must appear in the next flight, $i+1$, and criterion~4 that neither can be first in the next
 flight. This forces skippers $x$ and $y$ to compete in flight $i+1$ as the last match, violating
-criterion~1. Therefore, although not explicitly stated, there are no legal schedules with fewer than 6
-boats.
+criterion~1. Therefore, although not explicitly stated, it is not possible to satisfy every criteria
+with fewer than 6 boats.
 
 \section{The Constraint Models}\label{sec:models}
 
-The schedules are produced in four stages. The first stage produces a schedule that respects
+Our approach produces schedules in four stages. The first stage produces a schedule that respects
 criteria~1, 4, 11 and~12, and minimises criteria~10 (boat changes). The second stage constructs a
 schedule that respects criteria~1, 4, 11, 12 (again), has criterion~10 as a hard constraint generated
 from first stage, and minimises criterion~6 (balance). This results in a schedule that attempts to
@@ -478,9 +477,10 @@ minimise the number of boat changes. This is handled by \eqref{V8} and \eqref{C1
 \paragraph{Decision variables:} The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$,
 i.e.\ for each time slot we decide what match takes place. A symmetry break is made at the top of
 search by forcing the first round to contain the matches $(0,1), (2,3), \nldots$, i.e.\ $\forall i
-\in \{0 \nldots {m-1}\} : \match[{2i, 2i+1}] = i$.
+\in \{0 \nldots {m-1}\} : \match[{2i, 2i+1}] = i$. (This is independent of criterion~9, which will
+be enforced in a subsequent stage by renumbering.)
 
-\bigskip \noindent Figure \ref{schedChanges} gives a pictorial view of the entire model, using the 7
+\bigskip \noindent Figure~\ref{schedChanges} gives a pictorial view of the entire model, using the 7
 skipper and 6 boat problem. On the right we have the 7 skippers with their states and time slots.
 Again, top right, we give the schedule actually produced.  Middle left we have the $\match$ array
 and at the bottom the $\timeVar$ array. Above the $match$ array we have the $\modMatch$ array. The
