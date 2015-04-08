@@ -88,7 +88,7 @@ can be downloaded as blanks, then populated with actual competitors and used in 
 This work describes a round robin competition format that arises from sailing, known as match
 racing. Competitors, i.e.\ \emph{skippers}, compete against each other in a series of matches taking
 place in rounds, known as \emph{flights}.  A match is composed of two skippers, with each skipper in
-a boat on his own. Skippers in a match set off together, one on the port side, the other starboard,
+a boat on their own. Skippers in a match set off together, one on the port side, the other starboard,
 and first home wins that match. Criteria published by the International Sailing Federation (ISAF)
 dictate what makes a legal match race schedule and what should be optimised. This is a rich set of
 criteria, 13 in all, and as far as we know, all published schedules have been produced by hand. This
@@ -155,6 +155,10 @@ order of matches within a flight is significant and is constrained, as is the or
 within a schedule and the position of skippers within a match. This permits fair schedules that
 provide the sufficient changeover time for skippers changing boats, etc.
 
+Criteron~6 allows us to measure the \emph{balance} of a schedule. Perfect balance would be when a skipper has as many matches in first position in flights as in second position in flights, and so on. For example, if we had 9 skippers and 8 boats, each skipper would have 8 matches and could be in the first, second, third or fourth match of a flight. In perfect balance, each of the 8 skippers would appear twice in each position.
+
+Criterion~13 uses the term \emph{blanks} where conventionally we use the term \emph{bye}. That is, a blank is a bye and a bye is a flight where a skipper does not compete (and is ashore).
+
 Criterion~12 discusses boat changes: if in flight $i$ this skipper is not in a match (i.e. it is a
 bye for this skipper) but is in a match in flight $i+1$ then he has to get into a boat, rearrange
 all his kit and set the boat to his preference before racing commences, and this is a boat change.
@@ -189,9 +193,7 @@ address criteria~2, 3, 5 and~8.
 We now describe the constraint models and processes used in each stage. In the text below we assume
 there are $n$ skippers and $b$ boats, with $m = b/2$ matches in a flight. In total there are $t =
 n(n-1)/2$ matches and $f = \lceil n(n-1)/m  \rceil$ flights. We use the schedule in
-Table~\ref{tab1}, for 7 skippers and 6 boats, to help illustrate the constraint models. Our
-descriptions of the models omit some minor details, however the models are available to
-download\footnote{?? give us a link to the models}.
+Table~\ref{tab1}, for 7 skippers and 6 boats, to help illustrate the constraint models. 
 
 \begin{SCtable}[1.8][tb]
     \setlength{\tabcolsep}{3pt}
@@ -215,10 +217,10 @@ download\footnote{?? give us a link to the models}.
 \subsection{Stage 1: Minimising Boat Changes}
 
 \paragraph{Modeling skippers:} The first thing we model, in the first half of
-Figure~\ref{model:stage1}, is a skipper. Each skipper $\sigma$ has a temporal view of his schedule
+Figure~\ref{model:stage1}, is a skipper. Each skipper $\sigma$ has a temporal view of the schedule
 in the array of constrained integer variables $\timeSlot[0]$ to $\timeSlot[{t-1}]$, and a state view
 in the array of constraint integer variables $\state[0]$ to $\state[{f-1}]$. The state of this
-skipper in flight $i$ is found in $\state[i]$, and this corresponds to timeslots $\timeSlot[{i \cdot
+skipper in flight $i$ is found in $\state[i]$, and this corresponds to time slots $\timeSlot[{i \cdot
 m}]$ to $\timeSlot[{m(i+1)-1}]$.
 
 \begin{figure}[p]
@@ -278,11 +280,10 @@ skipper~$k$ at time~$i$. Variable $\state[{i}]$ gives the state of this skipper 
 cases in \eqref{C1} state that a skipper can be in a match in the first time slot in the flight, or in
 the middle of the flight\footnote{i.e.\ not first and not last.}, or in the last time
 slot of the flight. Alternatively, if all time slots in a flight are equal to $-1$ then the skipper
-is in a bye, and if all time slots in a flight are equal to $-2$ then the skipper has finished all
-his matches.
+is in a bye (i.e. not in a match in this flight), and if all time slots in a flight are equal to $-2$ then the skipper has finished all matches.
 
 We must then ensure that each skipper $\sigma$ is in a match with all other skippers $\{0, \nldots,
-n-1\} \setminus \{\sigma\}$. This is \eqref{C2}, which may be implemented by imposing a global
+n-1\} \setminus \{\sigma\}$. This is \eqref{C2}, which is enforced by imposing a global
 cardinality constraint \cite{globCard} on the array $\timeSlot$.
 
 \paragraph{State transitions:} The $\state$ variables are then used to impose match race criterion~4
@@ -294,8 +295,8 @@ represent a possible transition from one state to another. The DFA is encoded as
 $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from state $q_{i}$ to state $q_{j}$
 when encountering input $\iota$. In addition we specify the accepting states, which are all states
 except the start state (white) and the bye state (pink).  This constraint also ensures that if a
-skipper has finished his matches in flight $i$ (i.e.\ is in state $\END$) then he will also have
-finished his matches in flight $i+1$ (and so on).
+skipper has finished all matches in flight $i$ (i.e.\ is in state $\END$) then that skipper will also have
+finished all matches in flight $i+1$ (and so on).
 
 Figure~\ref{skipper5} also shows the skipper-oriented variables and constraints corresponding to
 skipper 5 in the schedule shown in Table~\ref{tab1}. The $\state$ array is presented as coloured boxes, and
@@ -786,7 +787,7 @@ and on the right is our schedule.}
 left. Criterion~4 (skippers in last match in a flight cannot be first in next flight) is violated on
 3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criterion~5 (no
 more than two consecutive port or starboard assignments) is violated for skipper 6 (flights 1 to 3)
-and 7 (flights 7 to 9). Criterion~6 (imbalance) is violated for skippers 6 and 8. Criterion~12  (new
+and skipper 7 (flights 7 to 9). Criterion~6 (imbalance) is violated for skippers 6 and 8. Criterion~12  (new
 boats do not sail first) is violated in flight 9 for skipper 5. Finally, the schedule has 8 boat
 changes. Our schedule, Table~\ref{08-06} on the right, respects all criteria and has 6 boat changes
 and a maximum imbalance of 1.
@@ -795,8 +796,7 @@ and a maximum imbalance of 1.
 and on the right for 8 boats. Neither of these schedules appear in the ISAF Umpires' Manual. Both
 schedules respect all criteria. For 6 boats there are 8 boat changes (no skipper making more than 1
 boat change) and a maximum imbalance of 2. For 8 boats there are again 8 boat changes, no skipper
-with more than 1 boat change, and perfect balance (each skipper 4 times on starboard side and 4 on
-port side).
+with more than 1 boat change, and each skipper 4 times on starboard side and 4 on port side.
 
 \begin{center}
 \begin{figure}[h]
@@ -849,11 +849,11 @@ port side).
 
 \paragraph{10 skippers and 6 boats:} Table \ref{10-06} shows the ISAF schedule on the right for 10
 skippers and 6 boats and on the right, our schedule.  The ISAF schedule violates criterion~5 (no more
-than 2 consecutive port or starboard assignments) 10 times (twice for skipper 0, 1 and 6 and once
+than 2 consecutive port or starboard assignments) ten times (twice for skippers 0, 1 and 6 and once
 for skippers 3, 7, 8 and 9).  Criterion~12 (new boats do not sail first) is violated 7 times (in
 flight 3 for skippers 6 and 2, flight 5 for skipper 8, flight 6 for skipper 7, flight 8 for skipper
 1, flight 9 for skipper 4 and flight 12 for skipper 4 again). There are 22 boat changes, with the
-minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Table \ref{10-06}
+minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Table \ref{10-06},
 satisfies all criteria, has 12 boat changes with the minimum changes for a skipper being 0 and the
 maximum 2, and a maximum imbalance of 1.
 
@@ -948,7 +948,7 @@ hopeless, struggling to produce a 7 skipper 6 boat schedule in days. The $\modMa
 variables were added. This improved domain filtering, and a flattened $\match$ array was used as
 decision variables. That is, the decisions where ``when do we schedule this match?''.  At this point
 we had not yet produced a 9 skipper 6 boat schedule and we suspected that the combined criteria
-might exclude such a schedule. A non-constraint model was developed by the fourth author, primarily
+might exclude such a schedule. A non-constraint model was developed, primarily
 to attempt to prove that there was no schedule for 9 skippers with 6 boats. This program used a
 backtracking search with decision variables being positions within flights, i.e.\ time slots being
 assigned to matches. At the top of search, the matches in the first flight were set, and symmetry
@@ -982,7 +982,7 @@ to prototype solutions quickly and to build solutions incrementally. There is al
 we might exploit in the future: we can now investigate the effect different criteria have on our
 ability to produce schedules and how relaxation of those affect optimisation criteria. That is, the
 constraint program might be used to design the next set of criteria for match race schedules, or
-allow the event organiser to decide which criteria he may sacrifice to ensure a faster schedule with
+allow the event organiser to decide which criteria to sacrifice to ensure a faster schedule with
 less boat changes.
 
 \bibliographystyle{plain}
