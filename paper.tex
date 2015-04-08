@@ -17,7 +17,7 @@
 \usepackage{framed}
 \usepackage{tikz}
 
-\usetikzlibrary{shapes, shapes.multipart, arrows, positioning}
+\usetikzlibrary{shapes, shapes.multipart, arrows, positioning, calc}
 
 \newcommand{\match}{\mathit{match}}
 \newcommand{\timeSlot}{\mathit{timeSlot}}
@@ -598,13 +598,134 @@ days CPU time was devoted to stages 1 and 2. Stages 3 and 4 completed in 15 mill
 schedule presented here is new, not appearing in the example schedules provided in \cite{isaf}.
 
 \begin{figure}[tb]
-\centering
-\includegraphics[height=10.2cm,width=13.2cm]{oriented.pdf}
-\caption{A pictorial representation of the orientation process, stage 4. Top right is the actual
-oriented schedule. Below that is the DFA to satisfy criterion~5. On the left is the zero/one
-variables, a row representing a skippers sequence of competitors. An edge between variables
-corresponds to a matched pair, that must take different values. Bottom right is a sketch by third
-author.}\label{oriented}
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={minimum size=2em,inner sep=1}]
+            \node (R0N)                                                at (0.4,  0) { 0: };
+            \node (R00) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 1,  0)$) { 6 };
+            \node (R01) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 2,  0)$) { 2 };
+            \node (R02) [draw, circle, fill=uofglawn]                  at ($(1.2 * 3,  0)$) { 5 };
+            \node (R03) [draw, circle, fill=uofglawn]                  at ($(1.2 * 4,  0)$) { 3 };
+            \node (R04) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 5,  0)$) { 4 };
+            \node (R05) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 6,  0)$) { 1 };
+
+            \node (R1N)                                                at (0.4, -1) { 1: };
+            \node (R10) [draw, circle, fill=uofglawn]                  at ($(1.2 * 1, -1)$) { 4 };
+            \node (R11) [draw, circle, fill=uofglawn]                  at ($(1.2 * 2, -1)$) { 2 };
+            \node (R12) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -1)$) { 5 };
+            \node (R13) [draw, circle, fill=uofglawn]                  at ($(1.2 * 4, -1)$) { 6 };
+            \node (R14) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 5, -1)$) { 3 };
+            \node (R15) [draw, circle, fill=uofglawn]                  at ($(1.2 * 6, -1)$) { 0 };
+
+            \node (R2N)                                                at (0.4, -2) { 2: };
+            \node (R20) [draw, circle, fill=uofglawn]                  at ($(1.2 * 1, -2)$) { 3 };
+            \node (R21) [draw, circle, fill=uofglawn]                  at ($(1.2 * 2, -2)$) { 0 };
+            \node (R22) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -2)$) { 1 };
+            \node (R23) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 4, -2)$) { 4 };
+            \node (R24) [draw, circle, fill=uofglawn]                  at ($(1.2 * 5, -2)$) { 5 };
+            \node (R25) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 6, -2)$) { 6 };
+
+            \node (R3N)                                                at (0.4, -3) { 3: };
+            \node (R30) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 1, -3)$) { 2 };
+            \node (R31) [draw, circle, fill=uofglawn]                  at ($(1.2 * 2, -3)$) { 6 };
+            \node (R32) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -3)$) { 0 };
+            \node (R33) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 4, -3)$) { 5 };
+            \node (R34) [draw, circle, fill=uofglawn]                  at ($(1.2 * 5, -3)$) { 1 };
+            \node (R35) [draw, circle, fill=uofglawn]                  at ($(1.2 * 6, -3)$) { 4 };
+
+            \node (R4N)                                                at (0.4, -4) { 4: };
+            \node (R40) [draw, circle, fill=uofglawn]                  at ($(1.2 * 1, -4)$) { 5 };
+            \node (R41) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 2, -4)$) { 1 };
+            \node (R42) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -4)$) { 6 };
+            \node (R43) [draw, circle, fill=uofglawn]                  at ($(1.2 * 4, -4)$) { 2 };
+            \node (R44) [draw, circle, fill=uofglawn]                  at ($(1.2 * 5, -4)$) { 0 };
+            \node (R45) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 6, -4)$) { 3 };
+
+            \node (R5N)                                                at (0.4, -5) { 5: };
+            \node (R50) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 1, -5)$) { 4 };
+            \node (R51) [draw, circle, fill=uofglawn]                  at ($(1.2 * 2, -5)$) { 6 };
+            \node (R52) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -5)$) { 0 };
+            \node (R53) [draw, circle, fill=uofglawn]                  at ($(1.2 * 4, -5)$) { 1 };
+            \node (R54) [draw, circle, fill=uofglawn]                  at ($(1.2 * 5, -5)$) { 3 };
+            \node (R55) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 6, -5)$) { 2 };
+
+            \node (R6N)                                                at (0.4, -6) { 6: };
+            \node (R60) [draw, circle, fill=uofglawn]                  at ($(1.2 * 1, -6)$) { 0 };
+            \node (R61) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 2, -6)$) { 5 };
+            \node (R62) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 3, -6)$) { 3 };
+            \node (R63) [draw, circle, fill=uofglawn]                  at ($(1.2 * 4, -6)$) { 4 };
+            \node (R64) [draw, circle, fill=uofgpillarbox, text=white] at ($(1.2 * 5, -6)$) { 1 };
+            \node (R65) [draw, circle, fill=uofglawn]                  at ($(1.2 * 6, -6)$) { 2 };
+
+            \draw [thick] (R00) to [out=300, in=90] ($(R30) + (0.6, 0)$) to [out=270, in=60] (R60);
+            \draw [thick] (R10) to [out=300, in=120] (R41);
+            \draw [thick] (R20) to                   (R30);
+            \draw [thick] (R40) to                   (R50);
+
+            \draw [thick] (R01) to [out=230, in=130] (R21);
+            \draw [thick] (R11) to                   (R22);
+            \draw [thick] (R31) to [out=300, in=120] (R62);
+            \draw [thick] (R51) to                   (R61);
+
+            \draw [thick] (R02) to [out=245, in=115] (R52);
+            \draw [thick] (R12) to [out=300, in=120] (R53);
+            \draw [thick] (R32) to [out=45,  in=225] (R03);
+            \draw [thick] (R42) to                   (R63);
+
+            \draw [thick] (R13) to [out=300, in=120] (R64);
+            \draw [thick] (R23) to [out=230, in=130] (R43);
+            \draw [thick] (R33) to                   (R54);
+
+            \draw [thick] (R04) to [out=245, in=115] (R44);
+            \draw [thick] (R14) to [out=310, in=50]  (R34);
+            \draw [thick] (R24) to [out=300, in=120] (R55);
+
+            \draw [thick] (R05) to                   (R15);
+            \draw [thick] (R25) to [out=245, in=115] (R65);
+            \draw [thick] (R35) to                   (R45);
+        \end{scope}
+
+        \begin{scope}[every node/.style={minimum size=2em,inner sep=1}, xshift=8.7cm, yshift=-5cm]
+            \node (DFAI)  [draw, circle, fill=white]                     at (0,  0)   { \phantom{$P_1$} };
+            \node (DFAP1) [draw, circle, fill=uofgpillarbox, text=white] at (1,  0.6) { $P_1$ };
+            \node (DFAP2) [draw, circle, fill=uofgpillarbox, text=white] at (2,  0.6) { $P_2$ };
+            \node (DFAS1) [draw, circle, fill=uofglawn]                  at (1, -0.6) { $S_1$ };
+            \node (DFAS2) [draw, circle, fill=uofglawn]                  at (2, -0.6) { $S_2$ };
+
+            \draw [->, >=latex, thick]  (DFAI)  to (DFAP1);
+            \draw [->, >=latex, thick]  (DFAI)  to (DFAS1);
+            \draw [->, >=latex, thick]  (DFAP1) to (DFAP2);
+            \draw [<->, >=latex, thick] (DFAP1) to (DFAS1);
+            \draw [->, >=latex, thick]  (DFAS1) to (DFAS2);
+            \draw [->, >=latex, thick]  (DFAP2) to (DFAS1);
+            \draw [->, >=latex, thick]  (DFAS2) to (DFAP1);
+        \end{scope}
+
+        \begin{scope}
+            \node [anchor=north west] at (7.5, 0.3) {
+                \begin{minipage}{4.5cm}
+                    \centering
+                    \setlength{\tabcolsep}{3pt}
+                    \begin{tabular}{cccc}
+                        \toprule
+                        Flight & \multicolumn{3}{c}{Matches} \\[2pt] \midrule
+                        0 & (0,6) & (3,2) & (5,4) \\
+                        1 & (0,2) & (4,1) & (6,5) \\
+                        2 & (2,1) & (5,0) & (6,3) \\
+                        3 & (1,5) & (3,0) & (4,6) \\
+                        4 & (3,5) & (6,1) & (2,4) \\
+                        5 & (1,3) & (0,4) & (5,2) \\
+                        6 & (4,3) & (2,6) & (1,0) \\ \bottomrule
+                    \end{tabular}
+                \end{minipage}
+            };
+        \end{scope}
+
+    \end{tikzpicture}
+    \caption{A pictorial representation of the orientation process, stage 4. Top right is the actual
+        oriented schedule. Below that is the DFA to satisfy criterion~5. On the left is the zero/one
+        variables, a row representing a skipper's sequence of competitors. An edge between variables
+        corresponds to a matched pair, that must take different values.}\label{oriented}
 \end{figure}
 
 \section{Sample Schedules}\label{sec:samples}
