@@ -94,7 +94,7 @@ dictate what makes a legal match race schedule and what should be optimised. Thi
 criteria, 13 in all, and as far as we know, all published schedules have been produced by hand. This
 is a daunting task. A close inspection of these schedules reveals that most are illegal, violating
 many of the match race scheduling criteria, many schedules are missing, and some that are legal are
-far from optimal.
+far from ISAF definition of optimality.
 
 This paper describes the scheduling problem. We present a constraint programming solution and
 document how this model was constructed incrementally. We believe this illustrates how adaptable
@@ -155,13 +155,13 @@ order of matches within a flight is significant and is constrained, as is the or
 within a schedule and the position of skippers within a match. This permits fair schedules that
 provide the sufficient changeover time for skippers changing boats, etc.
 
-Criteron~6 allows us to measure the \emph{balance} of a schedule. Perfect balance would be when a skipper has as many matches in first position in flights as in second position in flights, and so on. For example, if we had 9 skippers and 8 boats, each skipper would have 8 matches and could be in the first, second, third or fourth match of a flight. In perfect balance, each of the 8 skippers would appear twice in each position.
+Criteron~6 allows us to measure the \emph{balance} of a schedule. Perfect balance would be when a skipper has as many matches in first position in flights as in second position in flights, and so on. For example, if we had 9 skippers and 8 boats, each skipper would have 8 matches and could be in the first, second, third or fourth match of a flight. In perfect balance, each of the 8 skippers would appear twice in each position. Balance is one of our optimisation criteria.
 
 Criterion~13 uses the term \emph{blanks} where conventionally we use the term \emph{bye}. That is, a blank is a bye and a bye is a flight where a skipper does not compete (and is ashore).
 
 Criterion~12 discusses boat changes: if in flight $i$ this skipper is not in a match (i.e. it is a
 bye for this skipper) but is in a match in flight $i+1$ then he has to get into a boat, rearrange
-all his kit and set the boat to his preference before racing commences, and this is a boat change.
+all his kit and set the boat to his preference before racing commences, and this is a boat change. 
 
 Next, we note that skippers can be ranked prior to an event, based on their performance in
 previous events\footnote{\url{http://www.sailing.org/rankings/match/}}, which is used to seed the
@@ -951,7 +951,7 @@ and on the right, our schedule.}
 \end{center}
 
 \paragraph{8 skippers and 8 boats (easy-8):} Table \ref{08-08} shows the ISAF schedule on the right for 8
-skippers and 8 boats and on the right, our schedule.  The ISAF schedule violates criterion~4 (last match in a flight cannot be first in next flight) for skipper 5 in flights 1 and 2. Also, criterion 5 (no skipper should have more than 2 consecutive port or starboard assignments) is violated for skippers 0, 1, 3, 4 and 6. Furthermore, skipper 1 appears in the last match of four flights resulting in significant imbalance. Our schedule, on the right, satisfies all criteria, is optimal and took less than 10 seconds in total (all stages) to produce.
+skippers and 8 boats and on the right, our schedule.  The ISAF schedule violates criterion~4 (last match in a flight cannot be first in next flight) for skipper 5 in flights 1 and 2. Also, criterion 5 (no skipper should have more than 2 consecutive port or starboard assignments) is violated for skippers 0, 1, 3, 4 and 6. Furthermore, skipper 1 appears in the last match of four flights resulting in significant imbalance. Our schedule, on the right, satisfies all criteria, is optimal (maximum imbalance of 1) and took less than 10 seconds in total (all stages) to produce.
 
 \begin{center}
 \begin{figure}[tb]
