@@ -463,7 +463,7 @@ represented, and the lower half is made up of exactly the same variables, i.e.\ 
 a match between skippers $\sigma[{i}]$ and $\sigma[{j}]$ takes place at time $k$ (i.e.\
 $\match[{i,j}] = k$) if and only if  skipper $\sigma[{i}]$'s $k^{th}$ time slot is skipper
 $\sigma[{j}]$ and conversely that skipper $\sigma[{j}]$'s $k^{th}$ time slot is skipper
-$\sigma[{i}]$). Variables \eqref{V6} and constraints \eqref{C7} then convert this from time slots to
+$\sigma[{i}]$. Variables \eqref{V6} and constraints \eqref{C7} then convert this from time slots to
 flights, i.e.\ $\modMatch[{i,j}]$ is the flight in which skippers $\sigma[{i}]$ and $\sigma[{j}]$
 meet for a match. Finally, constraint \eqref{C8} ensures that each skipper's match occurs in
 different flights. Also, since $\modMatch[{i,j}] \equiv \modMatch[{j,i}]$, setting rows to be all
@@ -1616,8 +1616,8 @@ was then enhanced so that it would address optimisation rather than just satisfa
 trivial programming task.
 
 We have only reported a handful of our schedules, however there are missing schedules. Examples of
-these missing schedules are 10 skippers and 8 boats, 11 skippers with less than 10 boats, 12
-skippers and 8 boats, 13 skippers and 8 boats and 14 skippers with less than 10 boats. None of these
+these missing schedules are 10 skippers and 8 boats, 11 skippers with fewer than 10 boats, 12
+skippers and 8 boats, 13 skippers and 8 boats and 14 skippers with fewer than 10 boats. None of these
 schedules have been published by the ISAF, although we expect that they can be produced by
 selectively violating some of constraints. We have also not yet encoded criterion~7, addressing the
 situation of 10 or more boats. To do this we will have to modify the DFA constraint used in the
