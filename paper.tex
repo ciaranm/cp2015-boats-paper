@@ -155,7 +155,7 @@ that the order of matches within a flight is significant and is constrained, as 
 flights within a schedule and the position of skippers within a match. This permits fair schedules
 that provide the sufficient changeover time for skippers changing boats, etc.
 
-Criteron~6 allows us to measure the \emph{balance} of a schedule. Perfect balance would be when a skipper has as many matches in first position in flights as in second position in flights, and so on. For example, if we had 9 skippers and 8 boats, each skipper would have 8 matches and could be in the first, second, third or fourth match of a flight. In perfect balance, each of the 8 skippers would appear twice in each position. Balance is one of our optimisation criteria.
+Criteron~6 allows us to measure the \emph{balance} of a schedule. Perfect balance would be when a skipper has as many matches in first position in flights as in second position in flights, and so on. For example, if we had 9 skippers, each skipper would have 8 matches and could be in the first, second, third or fourth match of a flight. In perfect balance, each of the 8 skippers would appear twice in each position. Balance is one of our optimisation criteria, and we do this unconditionally i.e.\ even when there are more skippers than boats.
 
 Criterion~13 uses the term \emph{blanks} where conventionally we use the term \emph{bye}. That is, a blank is a bye and a bye is a flight where a skipper does not compete (and is ashore).
 
@@ -171,7 +171,7 @@ advantage in that match---criterion~8 accomplishes the seedings.
 
 Criterion~10 is ambiguous: this could be interpreted on a schedule basis: i.e.\ to minimise the
 overall number of changes in the entire pairing list schedule; or alternatively as well as a fair,
-but minimal number of changes across all skippers. In our work, we take the latter viewpoint.
+but minimal number of changes across all skippers. In our work, we minise the overall number of changes.
 
 There are some conflicts inherent in the criteria. Take criteria~4 and~11, assume we have 4 boats, and
 in flight $i$ the last match is the pair of skippers ($x,y$). Criterion~11 dictates that skippers $x$
@@ -1404,16 +1404,16 @@ and on the right is our schedule.}
 \label{08-06}
 \end{figure}
 
-\paragraph{8 skippers and 6 boats:} We first analyse the ISAF schedule, Table~\ref{08-06} on the
+\paragraph{8 skippers and 6 boats:} We first analyse the ISAF schedule, Figure~\ref{08-06} on the
 left. Criterion~4 (skippers in last match in a flight cannot be first in next flight) is violated on
 3 occasions (skipper 1 in flight 3, skipper 7 in flight 4, skipper 0 in flight 7). Criterion~5 (no
 more than two consecutive port or starboard assignments) is violated for skipper 6 (flights 1 to 3)
 and skipper 7 (flights 7 to 9). Criterion~6 (imbalance) is violated for skippers 6 and 8. Criterion~12  (new
 boats do not sail first) is violated in flight 9 for skipper 5. Finally, the schedule has 8 boat
-changes. Our schedule, Table~\ref{08-06} on the right, respects all criteria and has 6 boat changes
+changes. Our schedule, Figure~\ref{08-06} on the right, respects all criteria and has 6 boat changes
 and a maximum imbalance of 1.
 
-\paragraph{9 skippers:} Two new schedules are presented in Table~\ref{09}, on the left for 6 boats
+\paragraph{9 skippers:} Two new schedules are presented in Figure~\ref{09}, on the left for 6 boats
 and on the right for 8 boats. Neither of these schedules appear in the ISAF Umpires' Manual. Both
 schedules respect all criteria. For 6 boats there are 8 boat changes (no skipper making more than 1
 boat change) and a maximum imbalance of 2. For 8 boats there are again 8 boat changes, no skipper
@@ -1466,13 +1466,13 @@ with more than 1 boat change, and each skipper 4 times on starboard side and 4 o
 \label{09}
 \end{figure}
 
-\paragraph{10 skippers and 6 boats:} Table \ref{10-06} shows the ISAF schedule on the left for 10
+\paragraph{10 skippers and 6 boats:} Figure~\ref{10-06} shows the ISAF schedule on the left for 10
 skippers and 6 boats and on the right, our schedule.  The ISAF schedule violates criterion~5 (no more
 than 2 consecutive port or starboard assignments) ten times (twice for skippers 0, 1 and 6 and once
 for skippers 3, 7, 8 and 9).  Criterion~12 (new boats do not sail first) is violated 7 times (in
 flight 3 for skippers 6 and 2, flight 5 for skipper 8, flight 6 for skipper 7, flight 8 for skipper
 1, flight 9 for skipper 4 and flight 12 for skipper 4 again). There are 22 boat changes, with the
-minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Table \ref{10-06},
+minimum changes for a skipper being 1 and the maximum 3. Our schedule, right of Figure~\ref{10-06},
 satisfies all criteria, has 12 boat changes with the minimum changes for a skipper being 0 and the
 maximum 2, and a maximum imbalance of 1.
 
@@ -1529,7 +1529,7 @@ and on the right, our schedule.}
 \label{10-06}
 \end{figure}
 
-\paragraph{8 skippers and 8 boats (easy-8):} Table \ref{08-08} shows the ISAF schedule on the right
+\paragraph{8 skippers and 8 boats (easy-8):} Figure~\ref{08-08} shows the ISAF schedule on the right
 for 8 skippers and 8 boats and on the right, our schedule.  The ISAF schedule violates criterion~4
 (last match in a flight cannot be first in next flight) for skipper 5 in flights 1 and 2. Also,
 criterion 5 (no skipper should have more than 2 consecutive port or starboard assignments) is
@@ -1613,13 +1613,13 @@ surprisingly short amount of time, sometimes minutes of coding to add in a new f
 was then enhanced so that it would address optimisation rather than just satisfaction, again a
 trivial programming task.
 
-We have only reported a handful of our schedules, however there are missing schedules. Examples of
-these missing schedules are 10 skippers and 8 boats, 11 skippers with fewer than 10 boats, 12
+We have only reported a handful of our schedules, however there are missing schedules i.e.\ unpublished and not yet produced by us. Examples of
+these are 10 skippers and 8 boats, 11 skippers with fewer than 10 boats, 12
 skippers and 8 boats, 13 skippers and 8 boats and 14 skippers with fewer than 10 boats. None of these
 schedules have been published by the ISAF, although we expect that they can be produced by
 selectively violating some of constraints. We have also not yet encoded criterion~7, addressing the
 situation of 10 or more boats. To do this we will have to modify the DFA constraint used in the
-first two stages.
+first two stages. In addition, we have yet to address the format of \emph{two-group} round-robin schedules as also found in \cite{isaf}.
 
 \section{Conclusion}\label{sec:conclusions}
 
