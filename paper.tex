@@ -293,7 +293,8 @@ $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from state $q_{i
 when encountering input~$\iota$. In addition we specify the accepting states, which are all states
 except the start state (white) and the bye state (pink).  This constraint also ensures that if a
 skipper has finished all matches in flight $i$ (i.e.\ is in state $\END$) then that skipper will also have
-finished all matches in flight $i+1$ (and so on). Note that when we have as many boats as skippers directed edge $(\BYE,\LAST)$ becomes bidirectional.
+finished all matches in flight $i+1$ (and so on). Note that when we have as many
+boats as skippers, the directed edge $(\BYE,\LAST)$ (marked $\star$) becomes bidirectional.
 
 Figure~\ref{skipper5} also shows the skipper-oriented variables and constraints corresponding to
 skipper 5 in the schedule shown in Table~\ref{tab1}. The $\state$ array is presented as coloured boxes, and
@@ -339,7 +340,7 @@ variables \eqref{V3}, and the constraint \eqref{C4}, and accumulated into $\tota
         \draw [->, >=latex, thick] (DFAL) to [out=300, in=240, looseness=6] (DFAL);
         \draw [->, >=latex, thick] (DFAL) to [out=0, in=225] (DFAE);
 
-        \draw [<-, >=latex, thick] (DFAL) to (DFAB);
+        \draw [<-, >=latex, thick] (DFAL) to node [xshift=0.6em] { $\star$ } (DFAB);
 
         \draw [->, >=latex, thick] (DFAB) to [out=30, in=-30, looseness=6] (DFAB);
 
@@ -445,7 +446,8 @@ variables \eqref{V3}, and the constraint \eqref{C4}, and accumulated into $\tota
     \caption{A pictorial representation of a skipper (skipper 5) with multicoloured state and grey
         timeslots. The schedule for skipper 5 is in bold and the DFA for
         criteria~4, 11 and~12 is drawn with state $\START$ in white, $\FIRST$ in blue, $\MID$ in
-        yellow, $\LAST$ in green, $\BYE$ in pink and $\END$ in red.}\label{skipper5}
+        yellow, $\LAST$ in green, $\BYE$ in pink and $\END$ in red. The edge
+        marked $\star$ is explained in the text.}\label{skipper5}
 \end{figure}
 
 \paragraph{Match perspective:} We are now in a position to model criterion~1 (each skipper sails
