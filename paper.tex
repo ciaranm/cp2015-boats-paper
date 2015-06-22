@@ -220,9 +220,9 @@ I racing within flight $f$?'').  The temporal view is via the array $\timeSlot$ 
 \eqref{var:timeSlot}. If variable $\timeSlot[{i}] = k$ and $k \geq 0$ then this skipper is in a
 match with skipper~$k$ at time~$i$.
 
-Variable $\state[{i}]$ \eqref{var:state} gives the state of this skipper in flight~$i$,
+Variable $\state[{i}]$~\eqref{var:state} gives the state of this skipper in flight~$i$,
 corresponding to time slots $\timeSlot[{m \cdot i}]$ to $\timeSlot[{m(i+1)-1}]$.
-The cases in \eqref{C1} state that a skipper can be in a match in the first time slot in the flight,
+The cases in~\eqref{C1} state that a skipper can be in a match in the first time slot in the flight,
 or in the middle of the flight\footnote{i.e.\ not first and not last.}, or in the last time slot of
 the flight. Alternatively, if all time slots in a flight are equal to $-1$ then the skipper is in a
 bye (i.e. not in a match in this flight), and if all time slots in a flight are equal to $-2$ then
@@ -280,13 +280,13 @@ total. We define $\mathbb{N}$ to include zero.}\label{model:stage1}
 \end{figure}
 
 We must then ensure that each skipper $\sigma$ is in a match with all other skippers $\{0, \nldots,
-n-1\} \setminus \{\sigma\}$. This is \eqref{C2}, which is enforced by imposing a global
+n-1\} \setminus \{\sigma\}$. This is~\eqref{C2}, which is enforced by imposing a global
 cardinality constraint \cite{globCard} on the array $\timeSlot$.
 
 \paragraph{State transitions:} The $\state$ variables are then used to impose match race criterion~4
 (if last in flight $i$ then not first in flight $i+1$), criterion~11 (if last in flight $i$ then not
 in a bye in flight $i+1$) and criterion~12 (if flight $i$ is a bye then flight $i+1$ is not first).
-These criteria are imposed in \eqref{C3} by the deterministic finite automaton (DFA) shown in
+These criteria are imposed in~\eqref{C3} by the deterministic finite automaton (DFA) shown in
 Figure~\ref{skipper5} using Pesant's \emph{regular} constraint \cite{Pesant04}. The arcs in
 Figure~\ref{skipper5} represent possible transitions from one state to another. The DFA is encoded
 as a set of transition objects $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from
@@ -299,14 +299,14 @@ bidirectional.
 
 Figure~\ref{skipper5} also shows the skipper-oriented variables and constraints corresponding to
 skipper 5 in the schedule shown in Table~\ref{tab1}. The $\state$ array is presented as coloured boxes, and
-below that is the $\timeSlot$ array. The arrows represent the channeling constraints \eqref{C1}. The
+below that is the $\timeSlot$ array. The arrows represent the channeling constraints~\eqref{C1}. The
 $\state$ array is coloured with green representing $\LAST$, yellow for $\MID$, blue for $\FIRST$,
 red for $\LAST$ and (not shown) pink for $\BYE$. The schedule of Table~\ref{tab1} is reproduced with
 the matches for skipper 5 emboldened. 
 
 \paragraph{Boat changes:} A boat change occurs when a skipper has been in a $\BYE$ state in flight
 $i$ and then is in a match in the next flight $i+1$.  This is encoded using the array of zero/one
-variables \eqref{V3}, and the constraint \eqref{C4}, and accumulated into $\totalChanges$
+variables~\eqref{V3}, and the constraint~\eqref{C4}, and accumulated into $\totalChanges$
 (\ref{V4},~\ref{C5}).
 
 \begin{figure}[tb]
@@ -454,26 +454,26 @@ variables \eqref{V3}, and the constraint \eqref{C4}, and accumulated into $\tota
 \paragraph{Match perspective:} We are now in a position to model criterion~1 (each skipper sails
 against every other skipper) and optimization criterion~10 (minimize boat changes).  In the second
 half of Figure~\ref{model:stage1} we present a match perspective of the schedule, using a two
-dimensional array of variables $\match$ \eqref{V5}, where $\match[{i,j}]$ is the time slot in which
+dimensional array of variables $\match$~\eqref{V5}, where $\match[{i,j}]$ is the time slot in which
 skippers $\sigma[{i}]$ and $\sigma[{j}]$ meet in a match. Only the half above the diagonal is
 represented, and the lower half is made up of exactly the same variables, i.e.\ $\match[{i,j}]$ is
-\emph{exactly} the same constrained variable as $\match[{j,i}]$. Constraint \eqref{C6} states that
+\emph{exactly} the same constrained variable as $\match[{j,i}]$. Constraint~\eqref{C6} states that
 a match between skippers $\sigma[{i}]$ and $\sigma[{j}]$ takes place at time $k$ (i.e.\
 $\match[{i,j}] = k$) if and only if  skipper $\sigma[{i}]$'s $k^{th}$ time slot is skipper
 $\sigma[{j}]$ and conversely that skipper $\sigma[{j}]$'s $k^{th}$ time slot is skipper
-$\sigma[{i}]$. Variables \eqref{V6} and constraints \eqref{C7} then convert this from time slots to
+$\sigma[{i}]$. Variables~\eqref{V6} and constraints~\eqref{C7} then convert this from time slots to
 flights, i.e.\ $\modMatch[{i,j}]$ is the flight in which skippers $\sigma[{i}]$ and $\sigma[{j}]$
-meet for a match. Finally, constraint \eqref{C8} ensures that each skipper's match occurs in
+meet for a match. Finally, constraint~\eqref{C8} ensures that each skipper's match occurs in
 different flights. Also, since $\modMatch[{i,j}] \equiv \modMatch[{j,i}]$, setting rows to be all
 different also ensures that columns are all different.
 
-\paragraph{Temporal perspective:} We now take a temporal view \eqref{V7}, such that
+\paragraph{Temporal perspective:} We now take a temporal view~\eqref{V7}, such that
 $\timeVar[{\tau}]$ is a pair $(i,j)$, stating that at time $\tau$ skippers $\sigma[{i}]$ and
 $\sigma[{j}]$ are in a match. We channel between the match perspective and the temporal perspective
-using \eqref{C9}.
+using~\eqref{C9}.
 
 \paragraph{Optimization criteria:} Finally we have the optimization criterion (criterion~10) to
-minimize the number of boat changes. This is handled by \eqref{V8} and \eqref{C10}.
+minimize the number of boat changes. This is handled by~\eqref{V8} and~\eqref{C10}.
 
 \paragraph{Decision variables:} The decision variables are $\timeVar[{0}]$ to $\timeVar[{t-1}]$,
 i.e.\ for each time slot we decide what match takes place. A symmetry break is made at the top of
@@ -1180,15 +1180,15 @@ $\beta$ is the minimum number of boat changes found in stage 1.}\label{model:sta
 \subsection{Stage 2: Minimizing Imbalances}
 Having produced a schedule that minimizes boat changes, we then minimize imbalance (i.e.\ apply
 criterion~6) by extending the model in Figure~\ref{model:stage2}.  Assuming the first stage
-produces a schedule with $\beta$ boat changes we post this as a hard constraint \eqref{C11} in stage
-2. For each skipper $\sigma$ we introduce a zero/one variable $position[{i,j}]$ \eqref{V9} which is
+produces a schedule with $\beta$ boat changes we post this as a hard constraint~\eqref{C11} in stage
+2. For each skipper $\sigma$ we introduce a zero/one variable $position[{i,j}]$~\eqref{V9} which is
 1 if and only if skipper $\sigma$ is in a match in time $m \cdot j + i$, i.e.\ in the $i^{th}$ match
-of the  $j^{th}$ flight \eqref{C12}. Imbalance \eqref{V10} is then computed for each position, as
-the absolute amount over or under the expected presence in a given position \eqref{C13}. Finally, we
+of the  $j^{th}$ flight~\eqref{C12}. Imbalance~\eqref{V10} is then computed for each position, as
+the absolute amount over or under the expected presence in a given position~\eqref{C13}. Finally, we
 compute the maximum imbalance over all positions for this skipper (\ref{V11}, \ref{C14}).
 
-We then capture the maximum imbalance over all skippers (\ref{V12}, \ref{V13} and \ref{C15}) and
-minimize this \eqref{C16}. As before, the decision variables are $\timeVar[{0}]$ to
+We then capture the maximum imbalance over all skippers (\ref{V12}, \ref{V13} and~\ref{C15}) and
+minimize this~\eqref{C16}. As before, the decision variables are $\timeVar[{0}]$ to
 $\timeVar[{t-1}]$ and the same symmetry breaking is imposed at top of search.
 
 \subsection{Stage 3: Renaming Skippers}
