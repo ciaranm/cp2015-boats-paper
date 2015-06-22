@@ -247,7 +247,7 @@ the skipper has finished all matches.
     &\hspace*{1em} \state[{i}] = \END   &\ &\Leftrightarrow&&\ \forall j \in \{m \cdot i \nldots m \cdot (i + 1) - 1\} : \timeSlot[j] = -2
     \end{alignedat} \nonumber \\
     &\eachOccursExactlyOnce(\timeSlot, \{0, \nldots, n{-}1\} \setminus \{\sigma\}) \label{C2} \tag{C2} \\
-    & \regular(\state) \label{C3} \tag{C3} \\[0.1cm]
+    & \regular(\state, \textnormal{Figure~\ref{skipper5}}) \label{C3} \tag{C3} \\[0.1cm]
     & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] \in \{0,1\} \label{V3} \tag{V3} \\
     & \totalChanges \in \mathbb{N} \label{V4} \tag{V4} \\
     & \forall i \in \{0 \nldots f{-}2\}: \change[{i}] = 1 \Leftrightarrow \state[{i}] = \BYE \wedge \state[{i + 1}] \neq \BYE \label {C4} \tag{C4} \\
@@ -286,15 +286,16 @@ cardinality constraint \cite{globCard} on the array $\timeSlot$.
 \paragraph{State transitions:} The $\state$ variables are then used to impose match race criterion~4
 (if last in flight $i$ then not first in flight $i+1$), criterion~11 (if last in flight $i$ then not
 in a bye in flight $i+1$) and criterion~12 (if flight $i$ is a bye then flight $i+1$ is not first).
-These criteria are imposed by \eqref{C3}, which is a deterministic finite automaton (DFA) constraint, i.e. Pesant's \emph{regular} constraint 
-\cite{Pesant04}. The transitions for the DFA are shown pictorially in Figure~\ref{skipper5}: arcs
-represent a possible transition from one state to another. The DFA is encoded as a set of transition objects
-$\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from state $q_{i}$ to state $q_{j}$
-when encountering input~$\iota$. In addition we specify the accepting states, which are all states
-except the start state (white) and the bye state (pink).  This constraint also ensures that if a
-skipper has finished all matches in flight $i$ (i.e.\ is in state $\END$) then that skipper will also have
-finished all matches in flight $i+1$ (and so on). Note that when we have as many
-boats as skippers, the directed edge $(\BYE,\LAST)$ (marked $\star$) becomes bidirectional.
+These criteria are imposed in \eqref{C3} by the deterministic finite automaton (DFA) shown in
+Figure~\ref{skipper5} using Pesant's \emph{regular} constraint \cite{Pesant04}. The arcs in
+Figure~\ref{skipper5} represent possible transitions from one state to another. The DFA is encoded
+as a set of transition objects $\langle q_{i},\iota,q_{j} \rangle$, where a transition is made from
+state $q_{i}$ to state $q_{j}$ when encountering input~$\iota$. In addition we specify the accepting
+states, which are all states except the start state (white) and the bye state (pink).  This
+constraint also ensures that if a skipper has finished all matches in flight $i$ (i.e.\ is in state
+$\END$) then that skipper will also have finished all matches in flight $i+1$ (and so on). Note that
+when we have as many boats as skippers, the directed edge $(\BYE,\LAST)$ (marked $\star$) becomes
+bidirectional.
 
 Figure~\ref{skipper5} also shows the skipper-oriented variables and constraints corresponding to
 skipper 5 in the schedule shown in Table~\ref{tab1}. The $\state$ array is presented as coloured boxes, and
@@ -1341,7 +1342,7 @@ $orient[3,3] \neq orient[5,4]$.
 Summation constraints on each skipper enforce
 criteria~2 and~3 (equal number of port and starboard matches). Criterion~8 is enforced by posting
 constraints such that in a match ($\sigma[{i}],\sigma[{j}]$) where $\abs*{i - j} = 1$, the higher 
-indexed skipper (lower ranked) is on the port side. A DFA constraint (i.e. \emph{regular}) is posted for criterion~5
+indexed skipper (lower ranked) is on the port side. A \emph{regular} constraint is posted for criterion~5
 (restricting sequences of port and starboard assignments).
 
 In Figure~\ref{oriented}, port is red and starboard green. The sequence of zero/one variables for
